@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { useStoreState } from 'easy-peasy';
+import { Row, Col, Container } from 'react-bootstrap';
+
+import TodoInput from './Components/TodoInput/TodoInput';
+import TodoList from './Components/TodoList/TodoList';
+
+import './App.scss';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const todos = useStoreState((state) => state.todos);
+
+	return (
+		<Container className="app-container p-4">
+			<Row className="mb-2">
+				<Col>
+					<TodoInput></TodoInput>
+				</Col>
+			</Row>
+			<Row>
+				<Col className="d-flex flex-column">
+					<TodoList todoList={todos}></TodoList>
+				</Col>
+			</Row>
+		</Container>
+	);
 }
 
 export default App;

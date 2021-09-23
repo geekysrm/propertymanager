@@ -1,14 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { StoreProvider } from 'easy-peasy';
+
+import { rootStore } from './Store';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+	<React.StrictMode>
+		<StoreProvider store={rootStore}>
+			<App />
+		</StoreProvider>
+	</React.StrictMode>,
+	document.getElementById('property-management-app')
 );
 
 // If you want to start measuring performance in your app, pass a function
