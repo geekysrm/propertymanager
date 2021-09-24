@@ -1,6 +1,7 @@
 {
     "dependencies": {
-        "@project-serum/anchor": "^0.16.0"
+        "@project-serum/anchor": "^0.16.0",
+        "react-router-dom": "^5.3.0"
     },
     "devDependencies": {
         "chai": "^4.3.4",

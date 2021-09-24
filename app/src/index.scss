@@ -1,3 +1,5 @@
+@import './stylesheets/colors';
+
 *,
 *::before,
 *::after {
@@ -24,6 +26,18 @@ h3,
 h4,
 h5,
 h6,
-strong {
+strong,
+.bold {
 	font-weight: 700;
 }
+
+// .btn {
+// 	padding: 10px 30px !important;
+// 	font-weight: 700;
+// 	text-transform: uppercase;
+// }
+
+// .btn-primary {
+// 	color: $black !important;
+// 	background-color: $yellow !important;
+// }

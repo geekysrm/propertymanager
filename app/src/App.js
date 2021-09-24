@@ -1,27 +1,32 @@
-import { useStoreState } from 'easy-peasy';
 import { Row, Col, Container } from 'react-bootstrap';
-
-import TodoInput from './Components/TodoInput/TodoInput';
-import TodoList from './Components/TodoList/TodoList';
+import {
+	BrowserRouter as Router,
+	Route,
+	Switch,
+	Redirect,
+} from 'react-router-dom';
 
 import './App.scss';
+import Navbar from './Components/Navbar/Navbar';
+import Home from './Components/Home/Home';
+import Register from './Components/Register/Register';
 
 function App() {
-	const todos = useStoreState((state) => state.todos);
-
 	return (
-		<Container className="app-container p-4">
-			<Row className="mb-2">
-				<Col>
-					<TodoInput></TodoInput>
-				</Col>
-			</Row>
-			<Row>
-				<Col className="d-flex flex-column">
-					<TodoList todoList={todos}></TodoList>
-				</Col>
-			</Row>
-		</Container>
+		<Router>
+			<Navbar></Navbar>
+			<Container className="app-container" fluid>
+				<Row className="h-100">
+					<Col className="h-100">
+						<Switch>
+							<Route path="/home" component={Home} />
+							<Route path="/register" component={Register} />
+							<Redirect from="/" to="/home" />
+						</Switch>
+					</Col>
+				</Row>
+			</Container>
+		</Router>
 	);
 }
 

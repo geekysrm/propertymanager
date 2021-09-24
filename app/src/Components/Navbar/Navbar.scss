@@ -1,0 +1,27 @@
+@import '../../stylesheets/colors';
+
+.navbar-container {
+	background-color: $yellow !important;
+	text-transform: uppercase;
+	font-weight: 700;
+
+	.navbar-brand {
+		color: $black !important;
+	}
+
+	.nav-link-container {
+		display: flex;
+		gap: 5px;
+	}
+
+	.nav-link {
+		color: $black !important;
+		padding: 5px 15px !important;
+		border: 2px solid $black;
+
+		&.active {
+			color: $yellow !important;
+			background-color: $black !important;
+		}
+	}
+}
