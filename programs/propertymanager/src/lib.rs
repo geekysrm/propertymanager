@@ -6,19 +6,83 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 #[program]
 pub mod propertymanager {
     use super::*;
-    pub fn initialize(ctx: Context<Initialize>) -> ProgramResult {
+    pub fn initialize(ctx: Context<Initialize>, authority: Pubkey) -> ProgramResult {
+        let base_account = &mut ctx.accounts.base_account;
+        base_account.authority = authority;
+
+        Ok(())
+    }
+
+    pub fn register(ctx: Context<Register>, address: String, 
+        name: String, email: String, phone_number: String) -> ProgramResult {
+        let base_account = &mut ctx.accounts.base_account;
+
+        let user = User {
+            address,
+            name,
+            email,
+            phone_number,
+            property_list: Vec::new(),
+            buy_orders: Vec::new(),
+        };
+
+        base_account.user_map.insert(address, user);
+
+        Ok(())
+    }
+
+    pub fn addproperty(ctx: Context<AddProperty>, id: String, name: String, 
+        address: String, dimensions: String, zip_code: String) -> ProgramResult {
+        let base_account = &mut ctx.accounts.base_account;
+        
+        let mut property = Property {
+            id,
+            name,
+            address,
+            dimensions,
+            zip_code,
+            current_owner: base_account.authority.to_string(),
+            past_owner_list: Vec::new(),
+        };
+        property.past_owner_list.push(base_account.authority.to_string());
+
+        base_account.property_map.insert(id, property);
+
+        let user = &mut base_account.user_map.get(&base_account.authority.to_string());
+        user.property_list.push(id);
+
         Ok(())
     }
 }
 
 #[derive(Accounts)]
-pub struct Initialize {}
+pub struct Initialize<'info> {
+    #[account(init, payer = user, space = 2048 + 2048)]
+    pub base_account: Account<'info, BaseAccount>,
+    #[account(mut)]
+    pub user: Signer<'info>,
+    pub system_program: Program<'info, System>,
+}
+
+#[derive(Accounts)]
+pub struct Register<'info> {
+    #[account(mut)]
+    pub base_account: Account<'info, BaseAccount>,
+}
+
+#[derive(Accounts)]
+pub struct AddProperty<'info> {
+    #[account(mut, has_one = authority)]
+    pub base_account: Account<'info, BaseAccount>,
+    pub authority: Signer<'info>,
+}
 
 #[account]
 pub struct BaseAccount {
-    pub user_map: HashMap<String, User> // address -> User
-    pub property_map: HashMap<String, Property> // id -> Property
-    pub buy_order_map: HashMap<String, BuyOrder> // order_id -> BuyOrder
+    pub user_map: HashMap<String, User>, // address -> User
+    pub property_map: HashMap<String, Property>, // id -> Property
+    pub buy_order_map: HashMap<String, BuyOrder>, // order_id -> BuyOrder
+    pub authority: Pubkey,
 }
 
 pub struct User {
@@ -26,25 +90,18 @@ pub struct User {
     pub name: String,
     pub email: String,
     pub phone_number: String,
-    pub property_list: Vec<Property>,
-    pub buy_orders: Vec<BuyOrder>,
+    pub property_list: Vec<String>,
+    pub buy_orders: Vec<String>,
 }
 
 pub struct Property {
     pub id: String, // as no admin, we will create some properties with random id generator
     pub name: String,
     pub address: String, // residential address
-    pub lat: String,
-    pub long: String,
+    pub dimensions: String,
     pub zip_code: String,
-    pub current_owner: Owner,
-    pub past_owner_list: Vec<Owner>,
-}
-
-pub struct Owner {
-    pub user_address: String, // wallet address of owner
-    pub start_time: String,
-    pub end_time: String,
+    pub current_owner: String,
+    pub past_owner_list: Vec<String>,
 }
 
 pub struct BuyOrder {
@@ -80,4 +137,9 @@ pub struct BuyOrder {
 
 5. Reject Buy Order - 
     - Update Status in BuyOrder
+
+6. Add property - 
+    - Check for authority
+    - Create a property object
+    - Add it to authority's user object
 */
