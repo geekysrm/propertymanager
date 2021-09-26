@@ -1,7 +1,6 @@
-use std::collections::HashMap;
 use anchor_lang::prelude::*;
 
-declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
+declare_id!("9GMk42U1C3tZCUFNLQbEEPfqUgpnrYFDLfLiL8pzu4DT");
 
 #[program]
 pub mod propertymanager {
@@ -17,8 +16,6 @@ pub mod propertymanager {
         name: String, email: String, phone_number: String) -> ProgramResult {
         let base_account = &mut ctx.accounts.base_account;
 
-        let address_copy = address.clone();
-
         let user = User {
             address,
             name,
@@ -28,121 +25,121 @@ pub mod propertymanager {
             buy_orders: Vec::new(),
         };
 
-        base_account.user_map.insert(address_copy, user);
+        base_account.user_list.push(user);
 
         Ok(())
     }
 
-    pub fn addproperty(ctx: Context<AddProperty>, id: String, name: String, 
-        address: String, dimensions: String, zip_code: String) -> ProgramResult {
-        let base_account = &mut ctx.accounts.base_account;
+    // pub fn addproperty(ctx: Context<AddProperty>, id: String, name: String, 
+    //     address: String, dimensions: String, zip_code: String) -> ProgramResult {
+    //     let base_account = &mut ctx.accounts.base_account;
 
-        let id_copy = id.clone();
-        let id_copy2 = id.clone();
+    //     let id_copy = id.clone();
+    //     let id_copy2 = id.clone();
 
-        let authority_address = base_account.authority.to_string();
+    //     let authority_address = base_account.authority.to_string();
         
-        let mut property = Property {
-            id,
-            name,
-            address,
-            dimensions,
-            zip_code,
-            current_owner: base_account.authority.to_string(),
-            past_owner_list: Vec::new(),
-        };
-        property.past_owner_list.push(base_account.authority.to_string());
+    //     let mut property = Property {
+    //         id,
+    //         name,
+    //         address,
+    //         dimensions,
+    //         zip_code,
+    //         current_owner: base_account.authority.to_string(),
+    //         past_owner_list: Vec::new(),
+    //     };
+    //     property.past_owner_list.push(base_account.authority.to_string());
 
-        base_account.property_map.insert(id_copy, property);
+    //     base_account.property_map.insert(id_copy, property);
 
-        let mut user: User = base_account.user_map.get(&base_account.authority.to_string()).unwrap().clone();
-        user.property_list.push(id_copy2);
-        base_account.user_map.insert(authority_address, user);
+    //     let mut user: User = base_account.user_map.get(&base_account.authority.to_string()).unwrap().clone();
+    //     user.property_list.push(id_copy2);
+    //     base_account.user_map.insert(authority_address, user);
 
-        Ok(())
-    }
+    //     Ok(())
+    // }
 
-    pub fn transfer(ctx: Context<Transfer>, current_owner: String, next_owner: String, 
-        property_id: String) -> ProgramResult {
-        let base_account = &mut ctx.accounts.base_account;
+    // pub fn transfer(ctx: Context<Transfer>, current_owner: String, next_owner: String, 
+    //     property_id: String) -> ProgramResult {
+    //     let base_account = &mut ctx.accounts.base_account;
 
-        let mut property: Property = base_account.property_map.get(&property_id).unwrap().clone();
-        property.past_owner_list.push(current_owner.clone());
-        property.current_owner = next_owner.clone();
-        base_account.property_map.insert(property_id.clone(), property);
+    //     let mut property: Property = base_account.property_map.get(&property_id).unwrap().clone();
+    //     property.past_owner_list.push(current_owner.clone());
+    //     property.current_owner = next_owner.clone();
+    //     base_account.property_map.insert(property_id.clone(), property);
 
-        let mut current_user: User = base_account.user_map.get(&current_owner).unwrap().clone();
-        current_user.property_list.retain(|x| *x != property_id);
-        base_account.user_map.insert(current_owner, current_user);
+    //     let mut current_user: User = base_account.user_map.get(&current_owner).unwrap().clone();
+    //     current_user.property_list.retain(|x| *x != property_id);
+    //     base_account.user_map.insert(current_owner, current_user);
 
-        let mut next_user: User = base_account.user_map.get(&next_owner).unwrap().clone();
-        next_user.property_list.push(property_id);
-        base_account.user_map.insert(next_owner, next_user);
+    //     let mut next_user: User = base_account.user_map.get(&next_owner).unwrap().clone();
+    //     next_user.property_list.push(property_id);
+    //     base_account.user_map.insert(next_owner, next_user);
 
-        Ok(())
-    }
+    //     Ok(())
+    // }
 
-    pub fn createbuyorder(ctx: Context<CreateBuyOrder>, order_id: String, buyer_address: String, 
-        current_owner_address: String, property_id: String) -> ProgramResult {
-        let base_account = &mut ctx.accounts.base_account;
+    // pub fn createbuyorder(ctx: Context<CreateBuyOrder>, order_id: String, buyer_address: String, 
+    //     current_owner_address: String, property_id: String) -> ProgramResult {
+    //     let base_account = &mut ctx.accounts.base_account;
 
-        let order_id_copy = order_id.clone();
-        let order_id_copy2 = order_id.clone();
-        let current_owner_address_copy = current_owner_address.clone();
+    //     let order_id_copy = order_id.clone();
+    //     let order_id_copy2 = order_id.clone();
+    //     let current_owner_address_copy = current_owner_address.clone();
 
-        let buy_order = BuyOrder {
-            order_id,
-            buyer_address,
-            current_owner_address,
-            property_id,
-            status: String::from("REQUESTED"),
-        };
+    //     let buy_order = BuyOrder {
+    //         order_id,
+    //         buyer_address,
+    //         current_owner_address,
+    //         property_id,
+    //         status: String::from("REQUESTED"),
+    //     };
 
-        base_account.buy_order_map.insert(order_id_copy, buy_order);
+    //     base_account.buy_order_map.insert(order_id_copy, buy_order);
 
-        let mut current_owner: User = base_account.user_map.get(&current_owner_address_copy).unwrap().clone();
-        current_owner.buy_orders.push(order_id_copy2);
-        base_account.user_map.insert(current_owner_address_copy, current_owner);
+    //     let mut current_owner: User = base_account.user_map.get(&current_owner_address_copy).unwrap().clone();
+    //     current_owner.buy_orders.push(order_id_copy2);
+    //     base_account.user_map.insert(current_owner_address_copy, current_owner);
 
-        Ok(())
-    }
+    //     Ok(())
+    // }
 
-    pub fn approve(ctx: Context<Approve>, order_id: String) -> ProgramResult {
-        let base_account = &mut ctx.accounts.base_account;
+    // pub fn approve(ctx: Context<Approve>, order_id: String) -> ProgramResult {
+    //     let base_account = &mut ctx.accounts.base_account;
 
-        let mut buy_order: BuyOrder = base_account.buy_order_map.get(&order_id).unwrap().clone();
-        let current_owner = buy_order.clone().current_owner_address;
-        let next_owner = buy_order.clone().buyer_address;
-        let property_id = buy_order.clone().property_id;
+    //     let mut buy_order: BuyOrder = base_account.buy_order_map.get(&order_id).unwrap().clone();
+    //     let current_owner = buy_order.clone().current_owner_address;
+    //     let next_owner = buy_order.clone().buyer_address;
+    //     let property_id = buy_order.clone().property_id;
 
-        let mut property: Property = base_account.property_map.get(&property_id).unwrap().clone();
-        property.past_owner_list.push(current_owner.clone());
-        property.current_owner = next_owner.clone();
-        base_account.property_map.insert(property_id.clone(), property);
+    //     let mut property: Property = base_account.property_map.get(&property_id).unwrap().clone();
+    //     property.past_owner_list.push(current_owner.clone());
+    //     property.current_owner = next_owner.clone();
+    //     base_account.property_map.insert(property_id.clone(), property);
 
-        let mut current_user: User = base_account.user_map.get(&current_owner).unwrap().clone();
-        current_user.property_list.retain(|x| *x != property_id);
-        base_account.user_map.insert(current_owner, current_user);
+    //     let mut current_user: User = base_account.user_map.get(&current_owner).unwrap().clone();
+    //     current_user.property_list.retain(|x| *x != property_id);
+    //     base_account.user_map.insert(current_owner, current_user);
 
-        let mut next_user: User = base_account.user_map.get(&next_owner).unwrap().clone();
-        next_user.property_list.push(property_id);
-        base_account.user_map.insert(next_owner, next_user);
+    //     let mut next_user: User = base_account.user_map.get(&next_owner).unwrap().clone();
+    //     next_user.property_list.push(property_id);
+    //     base_account.user_map.insert(next_owner, next_user);
 
-        buy_order.status = String::from("APPROVED");
-        base_account.buy_order_map.insert(order_id.clone(), buy_order);
+    //     buy_order.status = String::from("APPROVED");
+    //     base_account.buy_order_map.insert(order_id.clone(), buy_order);
 
-        Ok(())
-    }
+    //     Ok(())
+    // }
 
-    pub fn reject(ctx: Context<Reject>, order_id: String) -> ProgramResult {
-        let base_account = &mut ctx.accounts.base_account;
+    // pub fn reject(ctx: Context<Reject>, order_id: String) -> ProgramResult {
+    //     let base_account = &mut ctx.accounts.base_account;
 
-        let mut buy_order: BuyOrder = base_account.buy_order_map.get(&order_id).unwrap().clone();
-        buy_order.status = String::from("REJECTED");
-        base_account.buy_order_map.insert(order_id.clone(), buy_order);
+    //     let mut buy_order: BuyOrder = base_account.buy_order_map.get(&order_id).unwrap().clone();
+    //     buy_order.status = String::from("REJECTED");
+    //     base_account.buy_order_map.insert(order_id.clone(), buy_order);
 
-        Ok(())
-    }
+    //     Ok(())
+    // }
 }
 
 #[derive(Accounts)]
@@ -160,42 +157,42 @@ pub struct Register<'info> {
     pub base_account: Account<'info, BaseAccount>,
 }
 
-#[derive(Accounts)]
-pub struct AddProperty<'info> {
-    #[account(mut, has_one = authority)]
-    pub base_account: Account<'info, BaseAccount>,
-    pub authority: Signer<'info>,
-}
+// #[derive(Accounts)]
+// pub struct AddProperty<'info> {
+//     #[account(mut, has_one = authority)]
+//     pub base_account: Account<'info, BaseAccount>,
+//     pub authority: Signer<'info>,
+// }
 
-#[derive(Accounts)]
-pub struct Transfer<'info> {
-    #[account(mut)]
-    pub base_account: Account<'info, BaseAccount>,
-}
+// #[derive(Accounts)]
+// pub struct Transfer<'info> {
+//     #[account(mut)]
+//     pub base_account: Account<'info, BaseAccount>,
+// }
 
-#[derive(Accounts)]
-pub struct CreateBuyOrder<'info> {
-    #[account(mut)]
-    pub base_account: Account<'info, BaseAccount>,
-}
+// #[derive(Accounts)]
+// pub struct CreateBuyOrder<'info> {
+//     #[account(mut)]
+//     pub base_account: Account<'info, BaseAccount>,
+// }
 
-#[derive(Accounts)]
-pub struct Approve<'info> {
-    #[account(mut)]
-    pub base_account: Account<'info, BaseAccount>,
-}
+// #[derive(Accounts)]
+// pub struct Approve<'info> {
+//     #[account(mut)]
+//     pub base_account: Account<'info, BaseAccount>,
+// }
 
-#[derive(Accounts)]
-pub struct Reject<'info> {
-    #[account(mut)]
-    pub base_account: Account<'info, BaseAccount>,
-}
+// #[derive(Accounts)]
+// pub struct Reject<'info> {
+//     #[account(mut)]
+//     pub base_account: Account<'info, BaseAccount>,
+// }
 
 #[account]
 pub struct BaseAccount {
-    pub user_map: HashMap<String, User>, // address -> User
-    pub property_map: HashMap<String, Property>, // id -> Property
-    pub buy_order_map: HashMap<String, BuyOrder>, // order_id -> BuyOrder
+    pub user_list: Vec<User>,
+    pub property_list: Vec<Property>,
+    pub buy_order_list: Vec<BuyOrder>,
     pub authority: Pubkey,
 }
 
