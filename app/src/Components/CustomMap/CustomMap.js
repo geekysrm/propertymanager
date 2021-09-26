@@ -6,18 +6,7 @@ const Map = ReactMapboxGl({
     "pk.eyJ1IjoiZ2Vla3lzcm0iLCJhIjoiY2pqOWlyYm9wMThubjNxbzVsbWZrZDFkYSJ9.qR-h7UMZRad_rFeA-GegMQ",
 });
 
-export default function CustomMap({
-  value,
-  type,
-  name,
-  placeholder,
-  label,
-  controlId,
-  formText,
-  errors,
-  onHandleChange,
-  className,
-}) {
+export default function CustomMap() {
   return (
     <div>
       <Map
@@ -26,9 +15,10 @@ export default function CustomMap({
           height: "100vh",
           width: "100vw",
         }}
+        center={[-9.142685, 38.736946]}
       >
         <Layer type="symbol" id="marker" layout={{ "icon-image": "marker-15" }}>
-          <Feature coordinates={[38.7223,  -9.194453]} />
+          <Feature coordinates={[-9.142685, 38.736946]} />
         </Layer>
       </Map>
     </div>
