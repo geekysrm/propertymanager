@@ -5,7 +5,7 @@ import { StoreProvider } from "easy-peasy";
 import reportWebVitals from "./reportWebVitals";
 
 import App from "./App";
-import { rootStore } from "./Store";
+import { rootStore } from "./store";
 
 import "./index.scss";
 
