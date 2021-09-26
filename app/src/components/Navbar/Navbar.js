@@ -20,7 +20,7 @@ export default function Navbar() {
     >
       <Container fluid>
         <NavbarBrand as={Link} to="/">
-          Propery Management
+          Property Management
         </NavbarBrand>
         <Nav className="ml-auto nav-link-container">
           <NavLink as={Link} to="home">

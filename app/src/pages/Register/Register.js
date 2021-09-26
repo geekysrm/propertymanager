@@ -29,7 +29,7 @@ export default function Register() {
           <Input
             name="firstname"
             label="Firstname"
-            placeholder="Enter firstname"
+            placeholder="Enter First Name"
             type="text"
             value={firstname}
             onHandleChange={setFirstname}
@@ -38,7 +38,7 @@ export default function Register() {
           <Input
             name="lastname"
             label="Lastname"
-            placeholder="Enter Lastname"
+            placeholder="Enter Last Name"
             type="text"
             value={lastname}
             onHandleChange={setLastname}
@@ -63,7 +63,7 @@ export default function Register() {
             className="mb-3"
           ></Input>
           <Button type="submit" color="primary">
-            Submut
+            Submit
           </Button>
         </Col>
       </Row>
