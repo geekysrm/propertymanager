@@ -10,6 +10,7 @@ export default function CustomMap() {
   return (
     <div>
       <Map
+        // eslint-disable-next-line react/style-prop-object
         style="mapbox://styles/mapbox/streets-v9"
         containerStyle={{
           height: "100vh",
