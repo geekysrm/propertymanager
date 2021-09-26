@@ -5,11 +5,13 @@ import {
 	Switch,
 	Redirect,
 } from 'react-router-dom';
-
+import 'mapbox-gl/dist/mapbox-gl.css';
 import './App.scss';
 import Navbar from './Components/Navbar/Navbar';
 import Home from './Components/Home/Home';
 import Register from './Components/Register/Register';
+import Map from './Components/Map/Map';
+
 
 function App() {
 	return (
@@ -21,6 +23,7 @@ function App() {
 						<Switch>
 							<Route path="/home" component={Home} />
 							<Route path="/register" component={Register} />
+							<Route path="/map" component={Map} />
 							<Redirect from="/" to="/home" />
 						</Switch>
 					</Col>
