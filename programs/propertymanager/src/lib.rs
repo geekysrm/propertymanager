@@ -77,67 +77,63 @@ pub mod propertymanager {
         Ok(())
     }
 
-    // pub fn createbuyorder(ctx: Context<CreateBuyOrder>, order_id: String, buyer_address: String, 
-    //     current_owner_address: String, property_id: String) -> ProgramResult {
-    //     let base_account = &mut ctx.accounts.base_account;
+    pub fn createbuyorder(ctx: Context<CreateBuyOrder>, order_id: String, buyer_address: String, 
+        current_owner_address: String, property_id: String) -> ProgramResult {
+        let base_account = &mut ctx.accounts.base_account;
 
-    //     let order_id_copy = order_id.clone();
-    //     let order_id_copy2 = order_id.clone();
-    //     let current_owner_address_copy = current_owner_address.clone();
+        let buy_order = BuyOrder {
+            order_id: order_id.clone(),
+            buyer_address: buyer_address.clone(),
+            current_owner_address: current_owner_address.clone(),
+            property_id: property_id.clone(),
+            status: String::from("REQUESTED"),
+        };
 
-    //     let buy_order = BuyOrder {
-    //         order_id,
-    //         buyer_address,
-    //         current_owner_address,
-    //         property_id,
-    //         status: String::from("REQUESTED"),
-    //     };
+        base_account.buy_order_list.push(buy_order);
 
-    //     base_account.buy_order_map.insert(order_id_copy, buy_order);
+        let current_owner_index: usize = base_account.user_list.iter().position(|u| *u.address == current_owner_address).unwrap().clone();
+        let current_user = &mut base_account.user_list[current_owner_index];
+        current_user.buy_orders.push(order_id);
 
-    //     let mut current_owner: User = base_account.user_map.get(&current_owner_address_copy).unwrap().clone();
-    //     current_owner.buy_orders.push(order_id_copy2);
-    //     base_account.user_map.insert(current_owner_address_copy, current_owner);
+        Ok(())
+    }
 
-    //     Ok(())
-    // }
+    pub fn approve(ctx: Context<Approve>, order_id: String) -> ProgramResult {
+        let base_account = &mut ctx.accounts.base_account;
 
-    // pub fn approve(ctx: Context<Approve>, order_id: String) -> ProgramResult {
-    //     let base_account = &mut ctx.accounts.base_account;
+        let buy_order_index: usize = base_account.buy_order_list.iter().position(|o| *o.order_id == order_id).unwrap().clone();
+        let buy_order = &mut base_account.buy_order_list[buy_order_index];
+        buy_order.status = String::from("APPROVED");
 
-    //     let mut buy_order: BuyOrder = base_account.buy_order_map.get(&order_id).unwrap().clone();
-    //     let current_owner = buy_order.clone().current_owner_address;
-    //     let next_owner = buy_order.clone().buyer_address;
-    //     let property_id = buy_order.clone().property_id;
+        let current_owner = buy_order.clone().current_owner_address;
+        let next_owner = buy_order.clone().buyer_address;
+        let property_id = buy_order.clone().property_id;
 
-    //     let mut property: Property = base_account.property_map.get(&property_id).unwrap().clone();
-    //     property.past_owner_list.push(current_owner.clone());
-    //     property.current_owner = next_owner.clone();
-    //     base_account.property_map.insert(property_id.clone(), property);
+        let property_index: usize = base_account.property_list.iter().position(|p| *p.id == property_id).unwrap().clone();
+        let property = &mut base_account.property_list[property_index];
+        property.past_owner_list.push(current_owner.clone());
+        property.current_owner = next_owner.clone();
 
-    //     let mut current_user: User = base_account.user_map.get(&current_owner).unwrap().clone();
-    //     current_user.property_list.retain(|x| *x != property_id);
-    //     base_account.user_map.insert(current_owner, current_user);
+        let current_owner_index: usize = base_account.user_list.iter().position(|u| *u.address == current_owner).unwrap().clone();
+        let current_user = &mut base_account.user_list[current_owner_index];
+        current_user.property_list.retain(|x| *x != property_id);
 
-    //     let mut next_user: User = base_account.user_map.get(&next_owner).unwrap().clone();
-    //     next_user.property_list.push(property_id);
-    //     base_account.user_map.insert(next_owner, next_user);
+        let next_owner_index: usize = base_account.user_list.iter().position(|u| *u.address == next_owner).unwrap().clone();
+        let next_user = &mut base_account.user_list[next_owner_index];
+        next_user.property_list.push(property_id);
 
-    //     buy_order.status = String::from("APPROVED");
-    //     base_account.buy_order_map.insert(order_id.clone(), buy_order);
+        Ok(())
+    }
 
-    //     Ok(())
-    // }
+    pub fn reject(ctx: Context<Reject>, order_id: String) -> ProgramResult {
+        let base_account = &mut ctx.accounts.base_account;
 
-    // pub fn reject(ctx: Context<Reject>, order_id: String) -> ProgramResult {
-    //     let base_account = &mut ctx.accounts.base_account;
+        let buy_order_index: usize = base_account.buy_order_list.iter().position(|o| *o.order_id == order_id).unwrap().clone();
+        let buy_order = &mut base_account.buy_order_list[buy_order_index];
+        buy_order.status = String::from("REJECTED");
 
-    //     let mut buy_order: BuyOrder = base_account.buy_order_map.get(&order_id).unwrap().clone();
-    //     buy_order.status = String::from("REJECTED");
-    //     base_account.buy_order_map.insert(order_id.clone(), buy_order);
-
-    //     Ok(())
-    // }
+        Ok(())
+    }
 }
 
 #[derive(Accounts)]
@@ -168,23 +164,23 @@ pub struct Transfer<'info> {
     pub base_account: Account<'info, BaseAccount>,
 }
 
-// #[derive(Accounts)]
-// pub struct CreateBuyOrder<'info> {
-//     #[account(mut)]
-//     pub base_account: Account<'info, BaseAccount>,
-// }
+#[derive(Accounts)]
+pub struct CreateBuyOrder<'info> {
+    #[account(mut)]
+    pub base_account: Account<'info, BaseAccount>,
+}
 
-// #[derive(Accounts)]
-// pub struct Approve<'info> {
-//     #[account(mut)]
-//     pub base_account: Account<'info, BaseAccount>,
-// }
+#[derive(Accounts)]
+pub struct Approve<'info> {
+    #[account(mut)]
+    pub base_account: Account<'info, BaseAccount>,
+}
 
-// #[derive(Accounts)]
-// pub struct Reject<'info> {
-//     #[account(mut)]
-//     pub base_account: Account<'info, BaseAccount>,
-// }
+#[derive(Accounts)]
+pub struct Reject<'info> {
+    #[account(mut)]
+    pub base_account: Account<'info, BaseAccount>,
+}
 
 #[account]
 pub struct BaseAccount {

@@ -122,4 +122,92 @@ describe("propertymanager", () => {
     console.log("property list1", account.userList[1].propertyList);
     console.log("property", account.propertyList[0]);
   });
+
+  it("Create Buy order", async () => {
+
+    const tx = await program.rpc.createbuyorder(
+      "random-order-id",
+      provider.wallet.publicKey.toString(),
+      "fake-address",
+      "property-id", 
+      {
+        accounts: {
+          baseAccount: baseAccount.publicKey,
+        },
+      }
+    );
+    console.log("Your transaction signature", tx);
+
+    await program.rpc.createbuyorder(
+      "to_be_rejected-order-id",
+      provider.wallet.publicKey.toString(),
+      "fake-address",
+      "property-id", 
+      {
+        accounts: {
+          baseAccount: baseAccount.publicKey,
+        },
+      }
+    );
+
+    const account = await program.account.baseAccount.fetch(
+      baseAccount.publicKey
+    );
+    console.log("account", account);
+    console.log("buy order list", account.buyOrderList);
+  });
+
+  it("Approve buy request", async () => {
+
+    let account = await program.account.baseAccount.fetch(
+      baseAccount.publicKey
+    );
+    console.log("Before....");
+    console.log("account", account);
+    console.log("user0", account.userList[0]);
+    console.log("user1", account.userList[1]);
+    console.log("property list0", account.userList[0].propertyList);
+    console.log("property list1", account.userList[1].propertyList);
+    console.log("property", account.propertyList[0]);
+
+    const tx = await program.rpc.approve(
+      "random-order-id",
+      {
+        accounts: {
+          baseAccount: baseAccount.publicKey,
+        },
+      }
+    );
+    console.log("Your transaction signature", tx);
+    
+    account = await program.account.baseAccount.fetch(
+      baseAccount.publicKey
+    );
+    console.log("After....");
+    console.log("account", account);
+    console.log("user0", account.userList[0]);
+    console.log("user1", account.userList[1]);
+    console.log("property list0", account.userList[0].propertyList);
+    console.log("property list1", account.userList[1].propertyList);
+    console.log("property", account.propertyList[0]);
+  });
+
+  it("Reject buy request", async () => {
+
+    const tx = await program.rpc.reject(
+      "to_be_rejected-order-id",
+      {
+        accounts: {
+          baseAccount: baseAccount.publicKey,
+        },
+      }
+    );
+    console.log("Your transaction signature", tx);
+
+    const account = await program.account.baseAccount.fetch(
+      baseAccount.publicKey
+    );
+    console.log("account", account);
+    console.log("buy order list", account.buyOrderList);
+  })
 });
