@@ -83,7 +83,7 @@ pub mod propertymanager {
     }
 
     pub fn createbuyorder(ctx: Context<CreateBuyOrder>, order_id: String, buyer_address: String, 
-        current_owner_address: String, property_id: String, status: String) -> ProgramResult {
+        current_owner_address: String, property_id: String) -> ProgramResult {
         let base_account = &mut ctx.accounts.base_account;
 
         let order_id_copy = order_id.clone();
@@ -95,7 +95,7 @@ pub mod propertymanager {
             buyer_address,
             current_owner_address,
             property_id,
-            status,
+            status: String::from("REQUESTED"),
         };
 
         base_account.buy_order_map.insert(order_id_copy, buy_order);
@@ -106,8 +106,44 @@ pub mod propertymanager {
 
         Ok(())
     }
-}
 
+    pub fn approve(ctx: Context<Approve>, order_id: String) -> ProgramResult {
+        let base_account = &mut ctx.accounts.base_account;
+
+        let mut buy_order: BuyOrder = base_account.buy_order_map.get(&order_id).unwrap().clone();
+        let current_owner = buy_order.clone().current_owner_address;
+        let next_owner = buy_order.clone().buyer_address;
+        let property_id = buy_order.clone().property_id;
+
+        let mut property: Property = base_account.property_map.get(&property_id).unwrap().clone();
+        property.past_owner_list.push(current_owner.clone());
+        property.current_owner = next_owner.clone();
+        base_account.property_map.insert(property_id.clone(), property);
+
+        let mut current_user: User = base_account.user_map.get(&current_owner).unwrap().clone();
+        current_user.property_list.retain(|x| *x != property_id);
+        base_account.user_map.insert(current_owner, current_user);
+
+        let mut next_user: User = base_account.user_map.get(&next_owner).unwrap().clone();
+        next_user.property_list.push(property_id);
+        base_account.user_map.insert(next_owner, next_user);
+
+        buy_order.status = String::from("APPROVED");
+        base_account.buy_order_map.insert(order_id.clone(), buy_order);
+
+        Ok(())
+    }
+
+    pub fn reject(ctx: Context<Reject>, order_id: String) -> ProgramResult {
+        let base_account = &mut ctx.accounts.base_account;
+
+        let mut buy_order: BuyOrder = base_account.buy_order_map.get(&order_id).unwrap().clone();
+        buy_order.status = String::from("REJECTED");
+        base_account.buy_order_map.insert(order_id.clone(), buy_order);
+
+        Ok(())
+    }
+}
 
 #[derive(Accounts)]
 pub struct Initialize<'info> {
@@ -139,6 +175,18 @@ pub struct Transfer<'info> {
 
 #[derive(Accounts)]
 pub struct CreateBuyOrder<'info> {
+    #[account(mut)]
+    pub base_account: Account<'info, BaseAccount>,
+}
+
+#[derive(Accounts)]
+pub struct Approve<'info> {
+    #[account(mut)]
+    pub base_account: Account<'info, BaseAccount>,
+}
+
+#[derive(Accounts)]
+pub struct Reject<'info> {
     #[account(mut)]
     pub base_account: Account<'info, BaseAccount>,
 }
