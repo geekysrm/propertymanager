@@ -57,25 +57,25 @@ pub mod propertymanager {
         Ok(())
     }
 
-    // pub fn transfer(ctx: Context<Transfer>, current_owner: String, next_owner: String, 
-    //     property_id: String) -> ProgramResult {
-    //     let base_account = &mut ctx.accounts.base_account;
+    pub fn transfer(ctx: Context<Transfer>, current_owner: String, next_owner: String, 
+        property_id: String) -> ProgramResult {
+        let base_account = &mut ctx.accounts.base_account;
 
-    //     let mut property: Property = base_account.property_map.get(&property_id).unwrap().clone();
-    //     property.past_owner_list.push(current_owner.clone());
-    //     property.current_owner = next_owner.clone();
-    //     base_account.property_map.insert(property_id.clone(), property);
+        let property_index: usize = base_account.property_list.iter().position(|p| *p.id == property_id).unwrap().clone();
+        let property = &mut base_account.property_list[property_index];
+        property.past_owner_list.push(current_owner.clone());
+        property.current_owner = next_owner.clone();
 
-    //     let mut current_user: User = base_account.user_map.get(&current_owner).unwrap().clone();
-    //     current_user.property_list.retain(|x| *x != property_id);
-    //     base_account.user_map.insert(current_owner, current_user);
+        let current_owner_index: usize = base_account.user_list.iter().position(|u| *u.address == current_owner).unwrap().clone();
+        let current_user = &mut base_account.user_list[current_owner_index];
+        current_user.property_list.retain(|x| *x != property_id);
 
-    //     let mut next_user: User = base_account.user_map.get(&next_owner).unwrap().clone();
-    //     next_user.property_list.push(property_id);
-    //     base_account.user_map.insert(next_owner, next_user);
+        let next_owner_index: usize = base_account.user_list.iter().position(|u| *u.address == next_owner).unwrap().clone();
+        let next_user = &mut base_account.user_list[next_owner_index];
+        next_user.property_list.push(property_id);
 
-    //     Ok(())
-    // }
+        Ok(())
+    }
 
     // pub fn createbuyorder(ctx: Context<CreateBuyOrder>, order_id: String, buyer_address: String, 
     //     current_owner_address: String, property_id: String) -> ProgramResult {
@@ -162,11 +162,11 @@ pub struct AddProperty<'info> {
     pub authority: Signer<'info>,
 }
 
-// #[derive(Accounts)]
-// pub struct Transfer<'info> {
-//     #[account(mut)]
-//     pub base_account: Account<'info, BaseAccount>,
-// }
+#[derive(Accounts)]
+pub struct Transfer<'info> {
+    #[account(mut)]
+    pub base_account: Account<'info, BaseAccount>,
+}
 
 // #[derive(Accounts)]
 // pub struct CreateBuyOrder<'info> {
