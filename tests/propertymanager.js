@@ -49,10 +49,10 @@ describe("propertymanager", () => {
   });
 
   it("Add Property", async () => {
-    const tx = await program.rpc.register(
-      "rand-id",
+    const tx = await program.rpc.addproperty(
+      "random-id",
       "property1",
-      "add.",
+      "address...",
       "dimenstions",
       "zip",
       "lat",
@@ -60,6 +60,7 @@ describe("propertymanager", () => {
       {
         accounts: {
           baseAccount: baseAccount.publicKey,
+          authority: provider.wallet.publicKey,
         },
       }
     );
@@ -70,6 +71,7 @@ describe("propertymanager", () => {
     );
     console.log("account", account);
     console.log("user", account.userList[0].toString());
+    console.log("property list", account.userList[0].propertyList.toString());
     console.log("property", account.propertyList[0].toString());
   });
 });

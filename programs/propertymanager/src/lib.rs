@@ -34,12 +34,9 @@ pub mod propertymanager {
         address: String, dimensions: String, zip_code: String, lat: String, lng: String) -> ProgramResult {
         let base_account = &mut ctx.accounts.base_account;
 
-        // let id_copy = id.clone();
-        // let id_copy2 = id.clone();
-
         let authority_address = base_account.authority.to_string();
         
-        let mut property = Property {
+        let property = Property {
             id: id.clone(),
             name,
             address,
@@ -52,13 +49,9 @@ pub mod propertymanager {
         };
 
         base_account.property_list.push(property);
-        println!("Find 2 in array1: {:?}", base_account.user_list.find(|&u| u.address == base_account.authority.to_string() ).unwrap());
-        // let mut user: User = base_account.user_list.get(&base_account.authority.to_string()).unwrap().clone();
-        let userIndex = base_account.user_list.position(|&u| u.address == base_account.authority.to_string());
-        let user:User = &mut base_account.user_list[userIndex];
-
-        // user.property_list.push(id.clone());
-        // base_account.user_list.push(authority_address, user);
+        
+        let user_index: usize = base_account.user_list.iter().position(|u| *u.address == authority_address).unwrap().clone();
+        let user = &mut base_account.user_list[user_index];
         user.property_list.push(id.clone());
 
         Ok(())
@@ -162,12 +155,12 @@ pub struct Register<'info> {
     pub base_account: Account<'info, BaseAccount>,
 }
 
-// #[derive(Accounts)]
-// pub struct AddProperty<'info> {
-//     #[account(mut, has_one = authority)]
-//     pub base_account: Account<'info, BaseAccount>,
-//     pub authority: Signer<'info>,
-// }
+#[derive(Accounts)]
+pub struct AddProperty<'info> {
+    #[account(mut, has_one = authority)]
+    pub base_account: Account<'info, BaseAccount>,
+    pub authority: Signer<'info>,
+}
 
 // #[derive(Accounts)]
 // pub struct Transfer<'info> {
