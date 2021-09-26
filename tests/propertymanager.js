@@ -1,10 +1,9 @@
-const anchor = require('@project-serum/anchor');
+const anchor = require("@project-serum/anchor");
 const assert = require("assert");
 
 const { SystemProgram } = anchor.web3;
 
-describe('propertymanager', () => {
-
+describe("propertymanager", () => {
   const provider = anchor.Provider.env();
   anchor.setProvider(provider);
   const program = anchor.workspace.Propertymanager;
@@ -12,7 +11,6 @@ describe('propertymanager', () => {
   const baseAccount = anchor.web3.Keypair.generate();
 
   it("Init", async () => {
-
     const tx = await program.rpc.initialize(provider.wallet.publicKey, {
       accounts: {
         baseAccount: baseAccount.publicKey,
@@ -23,21 +21,55 @@ describe('propertymanager', () => {
     });
     console.log("Your transaction signature", tx);
 
-    const account = await program.account.baseAccount.fetch(baseAccount.publicKey);
+    const account = await program.account.baseAccount.fetch(
+      baseAccount.publicKey
+    );
     console.log("account", account);
   });
 
   it("Register", async () => {
-    const tx = await program.rpc.register(provider.wallet.publicKey.toString(), "admin", 
-    "admin@admin.com", "999999999", {
-      accounts: {
-        baseAccount: baseAccount.publicKey,
+    const tx = await program.rpc.register(
+      provider.wallet.publicKey.toString(),
+      "admin",
+      "admin@admin.com",
+      "999999999",
+      {
+        accounts: {
+          baseAccount: baseAccount.publicKey,
+        },
       }
-    });
+    );
     console.log("Your transaction signature", tx);
 
-    const account = await program.account.baseAccount.fetch(baseAccount.publicKey);
+    const account = await program.account.baseAccount.fetch(
+      baseAccount.publicKey
+    );
     console.log("account", account);
     console.log("user", account.userList[0].toString());
+  });
+
+  it("Add Property", async () => {
+    const tx = await program.rpc.register(
+      "rand-id",
+      "property1",
+      "add.",
+      "dimenstions",
+      "zip",
+      "lat",
+      "lng",
+      {
+        accounts: {
+          baseAccount: baseAccount.publicKey,
+        },
+      }
+    );
+    console.log("Your transaction signature", tx);
+
+    const account = await program.account.baseAccount.fetch(
+      baseAccount.publicKey
+    );
+    console.log("account", account);
+    console.log("user", account.userList[0].toString());
+    console.log("property", account.propertyList[0].toString());
   });
 });

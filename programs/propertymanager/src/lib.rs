@@ -30,34 +30,39 @@ pub mod propertymanager {
         Ok(())
     }
 
-    // pub fn addproperty(ctx: Context<AddProperty>, id: String, name: String, 
-    //     address: String, dimensions: String, zip_code: String) -> ProgramResult {
-    //     let base_account = &mut ctx.accounts.base_account;
+    pub fn addproperty(ctx: Context<AddProperty>, id: String, name: String, 
+        address: String, dimensions: String, zip_code: String, lat: String, lng: String) -> ProgramResult {
+        let base_account = &mut ctx.accounts.base_account;
 
-    //     let id_copy = id.clone();
-    //     let id_copy2 = id.clone();
+        // let id_copy = id.clone();
+        // let id_copy2 = id.clone();
 
-    //     let authority_address = base_account.authority.to_string();
+        let authority_address = base_account.authority.to_string();
         
-    //     let mut property = Property {
-    //         id,
-    //         name,
-    //         address,
-    //         dimensions,
-    //         zip_code,
-    //         current_owner: base_account.authority.to_string(),
-    //         past_owner_list: Vec::new(),
-    //     };
-    //     property.past_owner_list.push(base_account.authority.to_string());
+        let mut property = Property {
+            id: id.clone(),
+            name,
+            address,
+            dimensions,
+            zip_code,
+            lat,
+            lng,
+            current_owner: base_account.authority.to_string(),
+            past_owner_list: Vec::new(),
+        };
 
-    //     base_account.property_map.insert(id_copy, property);
+        base_account.property_list.push(property);
+        println!("Find 2 in array1: {:?}", base_account.user_list.find(|&u| u.address == base_account.authority.to_string() ).unwrap());
+        // let mut user: User = base_account.user_list.get(&base_account.authority.to_string()).unwrap().clone();
+        let userIndex = base_account.user_list.position(|&u| u.address == base_account.authority.to_string());
+        let user:User = &mut base_account.user_list[userIndex];
 
-    //     let mut user: User = base_account.user_map.get(&base_account.authority.to_string()).unwrap().clone();
-    //     user.property_list.push(id_copy2);
-    //     base_account.user_map.insert(authority_address, user);
+        // user.property_list.push(id.clone());
+        // base_account.user_list.push(authority_address, user);
+        user.property_list.push(id.clone());
 
-    //     Ok(())
-    // }
+        Ok(())
+    }
 
     // pub fn transfer(ctx: Context<Transfer>, current_owner: String, next_owner: String, 
     //     property_id: String) -> ProgramResult {
@@ -213,6 +218,8 @@ pub struct Property {
     pub address: String, // residential address
     pub dimensions: String,
     pub zip_code: String,
+    pub lat: String,
+    pub lng: String,
     pub current_owner: String,
     pub past_owner_list: Vec<String>,
 }
