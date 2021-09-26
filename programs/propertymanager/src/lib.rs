@@ -143,62 +143,6 @@ pub mod propertymanager {
 
         Ok(())
     }
-
-    pub fn register(ctx: Context<Register>, address: String, 
-        name: String, email: String, phone_number: String) -> ProgramResult {
-        let base_account = &mut ctx.accounts.base_account;
-
-        let user = User {
-            address,
-            name,
-            email,
-            phone_number,
-            property_list: Vec::new(),
-            buy_orders: Vec::new(),
-        };
-
-        base_account.user_map.insert(address, user);
-
-        Ok(())
-    }
-
-    pub fn addproperty(ctx: Context<AddProperty>, id: String, name: String, 
-        address: String, dimensions: String, zip_code: String) -> ProgramResult {
-        let base_account = &mut ctx.accounts.base_account;
-        
-        let mut property = Property {
-            id,
-            name,
-            address,
-            dimensions,
-            zip_code,
-            current_owner: base_account.authority.to_string(),
-            past_owner_list: Vec::new(),
-        };
-        property.past_owner_list.push(base_account.authority.to_string());
-
-        base_account.property_map.insert(id, property);
-
-        let user = &mut base_account.user_map.get(&base_account.authority.to_string());
-        user.property_list.push(id);
-
-        Ok(())
-    }
-}
-
-#[derive(Accounts)]
-pub struct Initialize<'info> {
-    #[account(init, payer = user, space = 2048 + 2048)]
-    pub base_account: Account<'info, BaseAccount>,
-    #[account(mut)]
-    pub user: Signer<'info>,
-    pub system_program: Program<'info, System>,
-}
-
-#[derive(Accounts)]
-pub struct Register<'info> {
-    #[account(mut)]
-    pub base_account: Account<'info, BaseAccount>,
 }
 
 #[derive(Accounts)]
