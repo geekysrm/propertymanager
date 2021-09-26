@@ -7,15 +7,15 @@ import {
 } from "react-router-dom";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "./App.scss";
-import Navbar from "./components/Navbar/Navbar";
 import Home from "./pages/Home/Home";
 import Register from "./pages/Register/Register";
 import Map from "./pages/Map/Map";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
   return (
     <Router>
-      <Navbar />
+      <Navbar></Navbar>
       <div className="app-container" fluid>
         <Row className="h-100">
           <Col className="h-100">
