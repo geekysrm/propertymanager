@@ -28,7 +28,7 @@ export default function CustomMap({
         }}
       >
         <Layer type="symbol" id="marker" layout={{ "icon-image": "marker-15" }}>
-          <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
+          <Feature coordinates={[38.7223,  -9.194453]} />
         </Layer>
       </Map>
     </div>
