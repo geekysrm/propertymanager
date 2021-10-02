@@ -11,9 +11,14 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import './App.scss';
 
 import Home from './pages/Home';
-import Register from './pages/Register/Register';
+import Register from './pages/Register';
 import Map from './pages/Map/Map';
 import NotConnected from './pages/NotConnected';
+import UserProfile from './pages/UserProfile';
+import AddProperty from './pages/AddProperty';
+import PropertyProfile from './pages/PropertyProfile';
+import PropertyRequest from './pages/PropertyRequest';
+
 import Navbar from './components/Navbar/Navbar';
 
 function App() {
@@ -27,9 +32,13 @@ function App() {
 					<Col className="h-100">
 						<Switch>
 							<Route path="/home" component={Home} />
-							<Route path="/not-connected" component={NotConnected} />
-							<Route path="/register" component={Register} />
 							<Route path="/map" component={Map} />
+							<Route path="/register" component={Register} />
+							<Route path="/user/:id" component={UserProfile} />
+							<Route path="/property/request" component={PropertyRequest} />
+							<Route path="/property/add" component={AddProperty} />
+							<Route path="/property/:id" component={PropertyProfile} />
+							<Route path="/not-connected" component={NotConnected} />
 							<Redirect
 								from="/"
 								to={wallet.connected ? '/home' : '/not-connected'}
