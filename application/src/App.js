@@ -22,6 +22,8 @@ import { ColorModeSwitcher } from './ColorModeSwitcher';
 import Landing from './pages/Landing';
 import Navbar from './components/Navbar';
 
+import "./App.css";
+
 const theme = extendTheme({
   config: {
     useSystemColorMode: true,
