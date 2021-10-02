@@ -29,7 +29,7 @@ export default function Home() {
 			const account = await getAccount();
 			const walletAddress = wallet.publicKey.toString();
 			console.log('account', account);
-
+			console.log('>>>> wallet addr', walletAddress);
 			const currAccount = account.userList.filter(
 				(user) => user.address === walletAddress
 			);
@@ -72,6 +72,10 @@ export default function Home() {
 				signers: [pair],
 			});
 		}
+	}
+
+	if (!wallet.connected) {
+		history.push('/not-connected');
 	}
 
 	return (

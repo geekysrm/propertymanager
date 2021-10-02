@@ -60,6 +60,10 @@ export default function Register() {
 		return new Program(idl, programID, provider);
 	}
 
+	if (!wallet.connected) {
+		history.push('/not-connected');
+	}
+
 	return (
 		<Form
 			className="registration-form h-100 d-flex flex-column justify-content-center align-items-center"

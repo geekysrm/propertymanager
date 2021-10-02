@@ -82,6 +82,10 @@ export default function AddProperty() {
 		console.log('account', account);
 	}
 
+	if (!wallet.connected) {
+		history.push('/not-connected');
+	}
+
 	return (
 		<Form
 			className="registration-form h-100 d-flex flex-column justify-content-center align-items-center"

@@ -40,6 +40,7 @@ function App() {
 							<Route path="/property/:id" component={PropertyProfile} />
 							<Route path="/not-connected" component={NotConnected} />
 							<Redirect
+								exact
 								from="/"
 								to={wallet.connected ? '/home' : '/not-connected'}
 							/>
