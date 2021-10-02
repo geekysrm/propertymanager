@@ -7,7 +7,7 @@ import {
   VStack,
   Code,
   Grid,
-  extendTheme
+  extendTheme,
 } from '@chakra-ui/react';
 
 import {
@@ -22,13 +22,13 @@ import { ColorModeSwitcher } from './ColorModeSwitcher';
 import Landing from './pages/Landing';
 import Navbar from './components/Navbar';
 
-import "./App.css";
+import './App.css';
 
 const theme = extendTheme({
   config: {
     useSystemColorMode: true,
-    initialColorMode: "dark"
-  }
+    initialColorMode: 'dark',
+  },
 });
 
 function App() {
@@ -46,4 +46,6 @@ function App() {
 
 export default App;
 
-{/* <ColorModeSwitcher justifySelf="flex-end" /> */ }
+{
+  /* <ColorModeSwitcher justifySelf="flex-end" /> */
+}
