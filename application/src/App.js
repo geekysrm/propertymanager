@@ -9,7 +9,18 @@ import {
   Grid,
   extendTheme
 } from '@chakra-ui/react';
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
+
 import { ColorModeSwitcher } from './ColorModeSwitcher';
+
+import Landing from './pages/Landing';
+import Navbar from './components/Navbar';
 
 const theme = extendTheme({
   config: {
@@ -21,16 +32,16 @@ const theme = extendTheme({
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <div>
-            Hello
-          </div>
-        </Grid>
-      </Box>
+      <Navbar />
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Landing} />
+        </Switch>
+      </Router>
     </ChakraProvider>
   );
 }
 
 export default App;
+
+{/* <ColorModeSwitcher justifySelf="flex-end" /> */ }
