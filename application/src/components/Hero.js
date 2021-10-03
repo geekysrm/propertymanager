@@ -1,6 +1,6 @@
 import React from 'react';
 import { chakra, Box, useColorModeValue, Stack, Flex } from '@chakra-ui/react';
-import ReactPlayer from 'react-player/youtube';
+import YouTube from 'react-youtube';
 import { NavLink as Link } from 'react-router-dom';
 
 const Hero = () => {
@@ -80,7 +80,7 @@ const Hero = () => {
         mx="auto"
         textAlign="center"
       >
-        <ReactPlayer url="https://www.youtube.com/watch?v=dQw4w9WgXcQ" />
+        <YouTube videoId="dQw4w9WgXcQ" loading="lazy" />
       </Flex>
     </Flex>
   );
