@@ -16,11 +16,14 @@ import {
 import { useHistory } from 'react-router-dom';
 import { useWallet } from '@solana/wallet-adapter-react';
 
+import { v4 as uuidv4 } from "uuid";
+
 import { getProvider, getProgram, getAccount, getPair } from '../utils/solana';
 
 export default function AddPropertyForm() {
   const [propertyName, setPropertyName] = useState('');
   const [propertyAddress, setPropertyAddress] = useState('');
+  const [zip, setZip] = useState('');
   const [propertyDimensions1, setPropertyDimensions1] = useState(null);
   const [propertyDimensions2, setPropertyDimensions2] = useState(null);
   const [latitude, setLatitude] = useState(null);
@@ -32,7 +35,28 @@ export default function AddPropertyForm() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    console.log('handleSubmit AddPropertyForm');
+    const walletAddress = wallet.publicKey.toString();
+    const program = await getProgram(wallet);
+    const pair = getPair();
+    const dimensions = `${propertyDimensions1}X${propertyDimensions2}`.toString();
+
+    await program.rpc.addproperty(
+      uuidv4(),
+      propertyName,
+      propertyAddress,
+      dimensions,
+      zip,
+      latitude,
+      longitude,
+      {
+        accounts: {
+          baseAccount: pair.publicKey,
+          authority: wallet.publicKey,
+        },
+      }
+    );
+
+    history.push(`/user/${walletAddress}`);
   }
 
   return (
@@ -109,6 +133,32 @@ export default function AddPropertyForm() {
                       rounded="md"
                       value={propertyAddress}
                       onChange={e => setPropertyAddress(e.target.value)}
+                      required
+                    />
+                  </FormControl>
+
+                  <FormControl as={GridItem} colSpan={[6, 6]}>
+                    <FormLabel
+                      htmlFor="zip"
+                      fontSize="sm"
+                      fontWeight="md"
+                      color={useColorModeValue('gray.700', 'gray.50')}
+                    >
+                      ZipCode
+                    </FormLabel>
+                    <Input
+                      placeholder="XXXXXX"
+                      type="text"
+                      name="zip"
+                      id="zip"
+                      mt={1}
+                      focusBorderColor="brand.400"
+                      shadow="sm"
+                      size="sm"
+                      w="full"
+                      rounded="md"
+                      value={zip}
+                      onChange={e => setZip(e.target.value)}
                       required
                     />
                   </FormControl>
@@ -206,7 +256,7 @@ export default function AddPropertyForm() {
                   </FormControl>
 
                   <Button
-                    gridRowStart={5}
+                    gridRowStart={6}
                     gridColumnStart={6}
                     type="submit"
                     colorScheme="purple"

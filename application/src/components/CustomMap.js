@@ -14,10 +14,10 @@ export default function CustomMap() {
       containerStyle={{
         height: '100vh',
       }}
-      center={[-9.142685, 38.736946]}
+      center={[85.824539, 20.296059]}
     >
       <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-        <Feature coordinates={[-9.142685, 38.736946]} />
+        <Feature coordinates={[85.824539, 20.296059]} />
       </Layer>
     </Map>
   );

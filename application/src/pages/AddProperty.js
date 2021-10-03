@@ -6,27 +6,27 @@ import { getProvider, getProgram, getAccount, getPair } from '../utils/solana';
 import AddPropertyForm from '../components/AddPropertyForm';
 
 export default function AddProperty() {
-  const wallet = useWallet();
-  const history = useHistory();
+    const wallet = useWallet();
+    const history = useHistory();
 
-  //   useEffect(() => {
-  //     (async () => {
-  //       if (wallet.connected) {
-  //         const account = await getAccount(wallet);
-  //         const walletAddress = wallet.publicKey.toString();
+    useEffect(() => {
+        (async () => {
+            if (wallet.connected) {
+                const account = await getAccount(wallet);
+                const walletAddress = wallet.publicKey.toString();
 
-  //         if (account.authority.toString() !== walletAddress) {
-  //           history.push('/');
-  //         }
-  //       } else {
-  //         history.push('/connect');
-  //       }
-  //     })();
-  //   }, []);
+                if (account.authority.toString() !== walletAddress) {
+                    history.push('/');
+                }
+            } else {
+                history.push('/connect');
+            }
+        })();
+    }, []);
 
-  return (
-    <div>
-      <AddPropertyForm />
-    </div>
-  );
+    return (
+        <div>
+            <AddPropertyForm />
+        </div>
+    );
 }
