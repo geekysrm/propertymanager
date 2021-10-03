@@ -48,4 +48,8 @@ async function getAccount(wallet) {
     }
 }
 
-export { getProvider, getProgram, getAccount };
+function getPair() {
+    return pair;
+}
+
+export { getProvider, getProgram, getAccount, getPair };
