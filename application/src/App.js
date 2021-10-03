@@ -21,6 +21,8 @@ import { ColorModeSwitcher } from './ColorModeSwitcher';
 
 import Landing from './pages/Landing';
 import WalletConnect from './pages/WalletConnect';
+import Register from "./pages/Register";
+import UserProfile from "./pages/UserProfile";
 
 import Navbar from './components/Navbar';
 
@@ -41,6 +43,8 @@ function App() {
         <Switch>
           <Route exact path="/" component={Landing} />
           <Route exact path="/connect" component={WalletConnect} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/user/:address" component={UserProfile} />
         </Switch>
       </Router>
     </ChakraProvider>
@@ -48,7 +52,3 @@ function App() {
 }
 
 export default App;
-
-{
-  /* <ColorModeSwitcher justifySelf="flex-end" /> */
-}
