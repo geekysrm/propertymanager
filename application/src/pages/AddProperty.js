@@ -1,0 +1,32 @@
+import React, { useEffect, useState } from 'react';
+
+import { useWallet } from '@solana/wallet-adapter-react';
+import { useHistory } from 'react-router-dom';
+
+import { getProvider, getProgram, getAccount, getPair } from '../utils/solana';
+
+export default function AddProperty() {
+    const wallet = useWallet();
+    const history = useHistory();
+
+    useEffect(() => {
+        (async () => {
+            if (wallet.connected) {
+                const account = await getAccount(wallet);
+                const walletAddress = wallet.publicKey.toString();
+
+                if (account.authority.toString() !== walletAddress) {
+                    history.push('/');
+                }
+            } else {
+                history.push('/connect');
+            }
+        })();
+    }, []);
+
+    return (
+        <div>
+            Add property.
+        </div>
+    )
+}

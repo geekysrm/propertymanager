@@ -23,6 +23,7 @@ import Landing from './pages/Landing';
 import WalletConnect from './pages/WalletConnect';
 import Register from "./pages/Register";
 import UserProfile from "./pages/UserProfile";
+import AddProperty from './pages/AddProperty';
 
 import Navbar from './components/Navbar';
 
@@ -45,6 +46,7 @@ function App() {
           <Route exact path="/connect" component={WalletConnect} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/user/:address" component={UserProfile} />
+          <Route exact path="/add/property" component={AddProperty} />
         </Switch>
       </Router>
     </ChakraProvider>
