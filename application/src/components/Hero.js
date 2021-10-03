@@ -9,6 +9,8 @@ import {
 } from '@chakra-ui/react';
 import ReactPlayer from 'react-player';
 
+import { NavLink as Link } from 'react-router-dom';
+
 const Hero = () => {
   return (
     <Flex
@@ -72,6 +74,8 @@ const Hero = () => {
               _hover={{
                 bg: useColorModeValue('purple.700', 'purple.600'),
               }}
+              as={Link}
+              to="/connect"
             >
               Connect now
             </chakra.a>

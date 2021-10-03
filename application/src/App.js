@@ -20,6 +20,8 @@ import {
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 
 import Landing from './pages/Landing';
+import WalletConnect from './pages/WalletConnect';
+
 import Navbar from './components/Navbar';
 
 import './App.css';
@@ -38,6 +40,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/" component={Landing} />
+          <Route exact path="/connect" component={WalletConnect} />
         </Switch>
       </Router>
     </ChakraProvider>
