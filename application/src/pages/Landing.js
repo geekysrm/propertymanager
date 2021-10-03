@@ -6,7 +6,7 @@ import Features from '../components/Features';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useHistory } from 'react-router-dom';
 
-import { getProvider, getProgram, getAccount } from "../utils/solana";
+import { getProvider, getProgram, getAccount } from '../utils/solana';
 
 export default function Landing() {
   const wallet = useWallet();
@@ -18,7 +18,7 @@ export default function Landing() {
         const account = await getAccount(wallet);
         const walletAddress = wallet.publicKey.toString();
         const currAccount = account.userList.filter(
-          (user) => user.address === walletAddress
+          user => user.address === walletAddress
         );
 
         if (currAccount.length > 0) {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { Button } from '@chakra-ui/react';
@@ -30,10 +30,13 @@ export default function WallectConnect() {
       >
         <Button
           isDisabled={!wallet.connected}
-          onClick={() => { history.goBack() }}
+          onClick={() => {
+            history.goBack();
+          }}
           rightIcon={<ArrowForwardIcon />}
           colorScheme="purple"
-          variant="outline">
+          variant="outline"
+        >
           Continue
         </Button>
       </div>
