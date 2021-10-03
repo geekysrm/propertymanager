@@ -6,27 +6,12 @@ import {
   useColorModeValue,
   SimpleGrid,
   GridItem,
-  Heading,
-  Text,
   Stack,
   FormControl,
   FormLabel,
   Input,
-  InputGroup,
-  InputLeftAddon,
-  FormHelperText,
-  Textarea,
-  Avatar,
-  Icon,
   Button,
-  VisuallyHidden,
-  Select,
-  Checkbox,
-  RadioGroup,
-  Radio
 } from '@chakra-ui/react';
-import { FaUser } from 'react-icons/fa';
-
 import { useHistory } from 'react-router-dom';
 import { useWallet } from '@solana/wallet-adapter-react';
 
@@ -101,7 +86,7 @@ export default function Component() {
                       w="full"
                       rounded="md"
                       value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      onChange={e => setName(e.target.value)}
                     />
                   </FormControl>
 
@@ -126,7 +111,7 @@ export default function Component() {
                       w="full"
                       rounded="md"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={e => setEmail(e.target.value)}
                     />
                   </FormControl>
 
@@ -150,7 +135,7 @@ export default function Component() {
                       w="full"
                       rounded="md"
                       value={mobileNo}
-                      onChange={(e) => setMobileNo(e.target.value)}
+                      onChange={e => setMobileNo(e.target.value)}
                     />
                   </FormControl>
 

@@ -1,14 +1,14 @@
-import { ColorModeScript } from '@chakra-ui/react';
 import React, { StrictMode } from 'react';
+import { ColorModeScript } from '@chakra-ui/react';
 import ReactDOM from 'react-dom';
-import App from './App';
-
 import { getPhantomWallet } from '@solana/wallet-adapter-wallets';
 import {
   WalletProvider,
   ConnectionProvider,
 } from '@solana/wallet-adapter-react';
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
+
+import App from './App';
 
 const wallets = [getPhantomWallet()];
 

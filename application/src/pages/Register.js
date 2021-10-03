@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
-
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useHistory } from 'react-router-dom';
 
 import { getProvider, getProgram, getAccount } from '../utils/solana';
-
 import RegisterForm from '../components/RegisterForm';
 
 export default function Register() {

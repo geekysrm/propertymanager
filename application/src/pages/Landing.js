@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-
-import Hero from '../components/Hero';
-import Features from '../components/Features';
-
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useHistory } from 'react-router-dom';
 
+import Hero from '../components/Hero';
+import Features from '../components/Features';
 import { getProvider, getProgram, getAccount } from '../utils/solana';
 
 export default function Landing() {

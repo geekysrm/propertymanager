@@ -2,7 +2,6 @@ import React from 'react';
 import {
   chakra,
   Flex,
-  HStack,
   Icon,
   IconButton,
   Link,
@@ -24,6 +23,7 @@ import {
   AiOutlineInbox,
 } from 'react-icons/ai';
 import { BsFillCameraVideoFill } from 'react-icons/bs';
+import { Link as RouterLink } from 'react-router-dom';
 
 const Navbar = () => {
   const mobileNav = useDisclosure();
@@ -137,7 +137,7 @@ const Navbar = () => {
             justifyContent="space-between"
           >
             <Flex align="center">
-              <Link href="/">
+              <Link as={RouterLink} to="/">
                 <Image w="75%" src="/images/solproperty-logo.png" />
               </Link>
             </Flex>

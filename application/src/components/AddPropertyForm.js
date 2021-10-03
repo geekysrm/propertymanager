@@ -13,7 +13,6 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react';
-
 import { useHistory } from 'react-router-dom';
 import { useWallet } from '@solana/wallet-adapter-react';
 

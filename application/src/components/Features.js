@@ -8,7 +8,7 @@ import {
   Stack,
 } from '@chakra-ui/react';
 
-export default function C2g() {
+export default function Features() {
   const Feature = props => {
     return (
       <Flex>
