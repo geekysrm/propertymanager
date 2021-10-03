@@ -22,45 +22,45 @@ export default function UserProfile() {
 
   const [user, setUser] = useState({});
 
-  useEffect(() => {
-    (async () => {
-      if (wallet.connected) {
-        const account = await getAccount(wallet);
-        const walletAddress = wallet.publicKey.toString();
-        const currAccount = account.userList.filter(
-          user => user.address === walletAddress
-        );
+  // useEffect(() => {
+  //   (async () => {
+  //     if (wallet.connected) {
+  //       const account = await getAccount(wallet);
+  //       const walletAddress = wallet.publicKey.toString();
+  //       const currAccount = account.userList.filter(
+  //         user => user.address === walletAddress
+  //       );
 
-        if (currAccount.length === 0) {
-          history.push('/register');
-        } else {
-          const program = await getProgram(wallet);
-          const pair = getPair();
+  //       if (currAccount.length === 0) {
+  //         history.push('/register');
+  //       } else {
+  //         const program = await getProgram(wallet);
+  //         const pair = getPair();
 
-          const account = await program.account.baseAccount.fetch(
-            pair.publicKey
-          );
+  //         const account = await program.account.baseAccount.fetch(
+  //           pair.publicKey
+  //         );
 
-          const currAccount = account.userList.filter(
-            user => user.address === address
-          );
+  //         const currAccount = account.userList.filter(
+  //           user => user.address === address
+  //         );
 
-          console.log('currAccount', currAccount);
+  //         console.log('currAccount', currAccount);
 
-          if (currAccount.length === 0) {
-            history.push('/');
-          }
+  //         if (currAccount.length === 0) {
+  //           history.push('/');
+  //         }
 
-          setUser({
-            ...currAccount[0],
-            isAdmin: account.authority.toString() === address,
-          });
-        }
-      } else {
-        history.push('/connect');
-      }
-    })();
-  }, []);
+  //         setUser({
+  //           ...currAccount[0],
+  //           isAdmin: account.authority.toString() === address,
+  //         });
+  //       }
+  //     } else {
+  //       history.push('/connect');
+  //     }
+  //   })();
+  // }, []);
 
   function renderAdminBadge() {
     if (user.isAdmin) {
