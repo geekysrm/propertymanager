@@ -1,6 +1,6 @@
 import React from 'react';
 import { chakra, Box, useColorModeValue, Stack, Flex } from '@chakra-ui/react';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/youtube';
 import { NavLink as Link } from 'react-router-dom';
 
 const Hero = () => {
