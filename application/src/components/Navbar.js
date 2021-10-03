@@ -137,7 +137,7 @@ const Navbar = () => {
             justifyContent="space-between"
           >
             <Flex align="center">
-              <Link as={RouterLink} to="/">
+              <Link as={RouterLink} to="/" _focus={false}>
                 <Image w="75%" src="/images/solproperty-logo.png" />
               </Link>
             </Flex>
