@@ -13,6 +13,7 @@ import {
   Box,
   VStack,
   Button,
+  Image,
 } from '@chakra-ui/react';
 import { useViewportScroll } from 'framer-motion';
 import { FaMoon, FaSun, FaHeart } from 'react-icons/fa';
@@ -124,40 +125,38 @@ const Navbar = () => {
         bg={bg}
         w="full"
         overflowY="hidden"
+        mt="20px"
+        px="28"
       >
-        <chakra.div h="4.5rem" mx="auto" maxW="1200px">
-          <Flex w="full" h="full" px="6" align="center" justify="space-between">
+        <Flex h="4.5rem" mx="auto" alignItems="center">
+          <Flex
+            w="full"
+            h="full"
+            px="6"
+            alignItems="center"
+            justifyContent="space-between"
+          >
             <Flex align="center">
               <Link href="/">
-                <HStack>
-                  <p>SOLProperty</p>
-                </HStack>
+                <Image w="75%" src="/images/solproperty-logo.png" />
               </Link>
             </Flex>
 
-            <Flex
-              justify="flex-end"
-              w="full"
-              maxW="824px"
-              align="center"
-              color="gray.400"
-            >
-              <HStack spacing="5" display={{ base: 'none', md: 'flex' }}>
-                <Link
-                  isExternal
-                  aria-label="Go to Choc UI GitHub page"
-                  href="#"
-                >
-                  <Icon
-                    as={AiFillGithub}
-                    display="block"
-                    transition="color 0.2s"
-                    w="5"
-                    h="5"
-                    _hover={{ color: 'gray.600' }}
-                  />
-                </Link>
-              </HStack>
+            <Flex alignItems="center">
+              <Link
+                isExternal
+                aria-label="Go to Source"
+                href="https://github.com/geekysrm/propertymanager"
+              >
+                <Icon
+                  as={AiFillGithub}
+                  display="block"
+                  transition="color 0.2s"
+                  w="5"
+                  h="5"
+                  _hover={{ color: 'gray.600' }}
+                />
+              </Link>
               {/* <IconButton
                                 size="md"
                                 fontSize="lg"
@@ -180,8 +179,8 @@ const Navbar = () => {
               />
             </Flex>
           </Flex>
-          {MobileNavContent}
-        </chakra.div>
+        </Flex>
+        {MobileNavContent}
       </chakra.header>
     </Box>
   );
