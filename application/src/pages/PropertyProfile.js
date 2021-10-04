@@ -66,7 +66,7 @@ export default function PropertyProfile() {
   }
 
   function renderBtn() {
-    if (wallet.publicKey.toString() === property.currentOwner) {
+    if (wallet && wallet.publicKey && wallet.publicKey.toString() === property.currentOwner) {
       return (
         <Box mt={6} width="100%">
           <Button
@@ -125,7 +125,7 @@ export default function PropertyProfile() {
             <InfoOutlineIcon mr={2} />
             {property.dimensions}
           </Text>
-          {mainAccount && <Text fontSize="xl">
+          {mainAccount && <Text color="purple.300" fontSize="xl" as={Link} to={`/user/${property.currentOwner}`}>
             <CheckCircleIcon mr={2} />
             {getDetailsFromAddress(property.currentOwner).name}
           </Text>}
