@@ -21,6 +21,7 @@ export default function UserProfile() {
   const { address } = useParams();
 
   const [user, setUser] = useState({});
+  const [properties, setProperties] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -55,6 +56,14 @@ export default function UserProfile() {
             ...currAccount[0],
             isAdmin: account.authority.toString() === address,
           });
+
+          const properties = currAccount[0].propertyList.map(property => {
+            return account.propertyList.find(p => {
+              return p.id === property;
+            })
+          });
+
+          setProperties(properties);
         }
       } else {
         history.push('/connect');
@@ -95,6 +104,7 @@ export default function UserProfile() {
     <Flex
       style={{
         marginTop: '20px',
+        marginBottom: '40px',
         overflowX: 'hidden',
       }}
     >
@@ -116,8 +126,8 @@ export default function UserProfile() {
         </Stack>
         {renderAddPropertyBtn()}
       </Box>
-      <Box width="70%">
-        <CustomMap />
+      <Box width="70%" pl={2} pr={4}>
+        <CustomMap properties={properties} />
       </Box>
     </Flex>
   );

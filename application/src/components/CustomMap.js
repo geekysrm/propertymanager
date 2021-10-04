@@ -7,7 +7,22 @@ const Map = ReactMapboxGl({
     'pk.eyJ1IjoiZ2Vla3lzcm0iLCJhIjoiY2pqOWlyYm9wMThubjNxbzVsbWZrZDFkYSJ9.qR-h7UMZRad_rFeA-GegMQ',
 });
 
-export default function CustomMap() {
+function renderMarkers(properties) {
+  return properties.map(property => {
+    return <Marker
+      coordinates={[property.lng, property.lat]}
+      anchor="bottom"
+      key={`${property.lng}X${property.lat}`}>
+      <img
+        style={{ cursor: 'pointer' }}
+        src="https://res.cloudinary.com/geekysrm/image/upload/v1633292206/299087_marker_map_icon.png"
+        alt="map marker"
+      />
+    </Marker>
+  })
+}
+
+export default function CustomMap({ properties }) {
   return (
     <Map
       // eslint-disable-next-line react/style-prop-object
@@ -17,13 +32,7 @@ export default function CustomMap() {
       }}
       center={[85.824539, 20.296059]}
     >
-      <Marker coordinates={[85.824539, 20.296059]} anchor="bottom">
-        <img
-          style={{ cursor: 'pointer' }}
-          src="https://res.cloudinary.com/geekysrm/image/upload/v1633292206/299087_marker_map_icon.png"
-          alt="map marker"
-        />
-      </Marker>
+      {renderMarkers(properties)}
     </Map>
   );
 }
