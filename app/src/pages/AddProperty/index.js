@@ -12,6 +12,13 @@ import Input from "../../components/Input/Input";
 import idl from "../../idl.json";
 import kp from "../../keypair.json";
 
+import {
+  clusterApiUrl
+} from '@solana/web3.js';
+
+const network = clusterApiUrl('devnet');
+
+
 const arr = Object.values(kp._keypair.secretKey);
 const secret = new Uint8Array(arr);
 const pair = web3.Keypair.fromSecretKey(secret);
@@ -42,7 +49,7 @@ export default function AddProperty() {
   }, []);
 
   async function getProvider() {
-    const network = "http://127.0.0.1:8899";
+    const network = clusterApiUrl('devnet');
     const connection = new Connection(network, opts.preflightCommitment);
 
     const provider = new Provider(connection, wallet, opts.preflightCommitment);

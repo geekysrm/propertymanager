@@ -7,6 +7,13 @@ import { useHistory } from 'react-router-dom';
 
 import './Home.scss';
 
+import {
+	clusterApiUrl
+  } from '@solana/web3.js';
+  
+  const network = clusterApiUrl('devnet');
+  
+
 import idl from '../../idl.json';
 import kp from '../../keypair.json';
 
@@ -43,7 +50,7 @@ export default function Home() {
 	}, []);
 
 	async function getProvider() {
-		const network = 'http://127.0.0.1:8899';
+		const network = clusterApiUrl('devnet');
 		const connection = new Connection(network, opts.preflightCommitment);
 
 		const provider = new Provider(connection, wallet, opts.preflightCommitment);

@@ -7,15 +7,22 @@ import {
   ConnectionProvider,
 } from '@solana/wallet-adapter-react';
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
+import {
+  clusterApiUrl
+} from '@solana/web3.js';
 
 import App from './App';
 
 const wallets = [getPhantomWallet()];
 
+
+const network = clusterApiUrl('devnet');
+
+
 ReactDOM.render(
   <StrictMode>
     <ColorModeScript />
-    <ConnectionProvider endpoint="http://127.0.0.1:8899">
+    <ConnectionProvider endpoint={clusterApiUrl('devnet')}>
       <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
           <App />
