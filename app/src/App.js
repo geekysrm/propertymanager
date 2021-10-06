@@ -23,7 +23,6 @@ import Navbar from './components/Navbar/Navbar';
 
 function App() {
 	const wallet = useWallet();
-genuine giggle edit cement robot secret mimic topic barely topic illness depth
 	return (
 		<Router>
 			<Navbar></Navbar>
