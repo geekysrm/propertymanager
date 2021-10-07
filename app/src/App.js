@@ -23,7 +23,6 @@ import Navbar from './components/Navbar/Navbar';
 
 function App() {
 	const wallet = useWallet();
-
 	return (
 		<Router>
 			<Navbar></Navbar>

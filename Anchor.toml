@@ -1,12 +1,10 @@
-[programs.localnet]
-propertymanager = "F9gJtrj1VWqvKo4C2tD4epKgnvTm2DfxqYfjduQJDX8H"
+[programs.devnet]
+propertymanager = "H1wEdLaMbs2UYu6dWwRP1zmhJCh1JuBLEc9QA69h9Wup"
 
 [registry]
 url = "https://anchor.projectserum.com"
 
 [provider]
-cluster = "localnet"
+cluster = "devnet"
 wallet = "~/.config/solana/id.json"
 
-[scripts]
-test = "mocha -t 1000000 tests/"

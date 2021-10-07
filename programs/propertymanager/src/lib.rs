@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("F9gJtrj1VWqvKo4C2tD4epKgnvTm2DfxqYfjduQJDX8H");
+declare_id!("H1wEdLaMbs2UYu6dWwRP1zmhJCh1JuBLEc9QA69h9Wup");
 
 #[program]
 pub mod propertymanager {
