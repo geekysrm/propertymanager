@@ -158,8 +158,8 @@ export default function PropertyProfile() {
 					)}
 				</Stack>
 				{wallet &&
-				wallet.publicKey &&
-				wallet.publicKey.toString() === property.currentOwner ? (
+					wallet.publicKey &&
+					wallet.publicKey.toString() === property.currentOwner ? (
 					<Box mt={6} width="100%">
 						<Button
 							width="100%"
@@ -207,6 +207,7 @@ export default function PropertyProfile() {
 					<FormControl>
 						<FormLabel>Transfer To Address</FormLabel>
 						<Input
+							mt="2"
 							type="text"
 							placeholder="Enter address"
 							onChange={(e) => setBuyerAddress(e.target.value)}
@@ -215,7 +216,7 @@ export default function PropertyProfile() {
 					</FormControl>
 					<Button
 						type="button"
-						colorScheme="whatsapp"
+						bg="purple.500"
 						mt="5"
 						ml="auto"
 						onClick={onTransferProperty}

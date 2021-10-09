@@ -81,7 +81,9 @@ export default function UserProfile() {
 						return account.buyOrderList.find((o) => {
 							return o.orderId === order;
 						});
-					});
+					}).filter(order => order.status === "REQUESTED");
+
+					console.log(yourRequests);
 
 					setRequests(yourRequests);
 
@@ -136,6 +138,90 @@ export default function UserProfile() {
 		});
 	}
 
+	async function approveBuyRequest(buyRequestId) {
+		const program = await getProgram(wallet);
+		const pair = getPair();
+
+		await program.rpc.approve(
+			buyRequestId,
+			{
+				accounts: {
+					baseAccount: pair.publicKey,
+				},
+			}
+		);
+
+		const account = await program.account.baseAccount.fetch(
+			pair.publicKey
+		);
+
+		const currAccount = account.userList.filter(
+			(user) => user.address === address
+		);
+		setUser({
+			...currAccount[0],
+			isAdmin: account.authority.toString() === address,
+		});
+
+		const properties = currAccount[0].propertyList.map((property) => {
+			return account.propertyList.find((p) => {
+				return p.id === property;
+			});
+		});
+		setProperties(properties);
+
+		const yourRequests = currAccount[0].buyOrders.map((order) => {
+			return account.buyOrderList.find((o) => {
+				return o.orderId === order;
+			});
+		}).filter(order => order.status === "REQUESTED");
+		setRequests(yourRequests);
+
+		setMainAccount(account);
+	}
+
+	async function rejectBuyRequest(buyRequestId) {
+		const program = await getProgram(wallet);
+		const pair = getPair();
+
+		await program.rpc.reject(
+			buyRequestId,
+			{
+				accounts: {
+					baseAccount: pair.publicKey,
+				},
+			}
+		);
+
+		const account = await program.account.baseAccount.fetch(
+			pair.publicKey
+		);
+
+		const currAccount = account.userList.filter(
+			(user) => user.address === address
+		);
+		setUser({
+			...currAccount[0],
+			isAdmin: account.authority.toString() === address,
+		});
+
+		const properties = currAccount[0].propertyList.map((property) => {
+			return account.propertyList.find((p) => {
+				return p.id === property;
+			});
+		});
+		setProperties(properties);
+
+		const yourRequests = currAccount[0].buyOrders.map((order) => {
+			return account.buyOrderList.find((o) => {
+				return o.orderId === order;
+			});
+		}).filter(order => order.status === "REQUESTED");
+		setRequests(yourRequests);
+
+		setMainAccount(account);
+	}
+
 	return (
 		<Flex
 			style={{
@@ -174,81 +260,109 @@ export default function UserProfile() {
 						</Button>
 					</Box>
 				)}
-				<Heading mt="10" mb="5">
+				<Heading size="lg" mt="10" mb="5">
 					Your Properties:
 				</Heading>
-				<Accordion
-					allowToggle
-					defaultIndex={[0]}
-					onChange={onHandleAccordionChange}
-				>
-					{properties.map((property) => (
-						<AccordionItem>
-							<Text>
-								<AccordionButton>
-									<Box flex="1" textAlign="left">
-										<Heading size="lg">{property.name}</Heading>
-									</Box>
-									<AccordionIcon />
-								</AccordionButton>
-							</Text>
-							<AccordionPanel pb={4}>
-								<Text fontSize="xl" display="flex" alignItems="center">
-									<Icon mr="2" as={AiOutlineHome}></Icon>
-									{`${property.address}, ${property.zipCode}`}
+				{properties.length > 0 ?
+					<Accordion
+						allowToggle
+						defaultIndex={[0]}
+						onChange={onHandleAccordionChange}
+					>
+						{properties.map((property) => (
+							<AccordionItem>
+								<Text>
+									<AccordionButton>
+										<Box flex="1" textAlign="left">
+											<Heading size="md">{property.name}</Heading>
+										</Box>
+										<AccordionIcon />
+									</AccordionButton>
 								</Text>
-								<Text fontSize="xl">
-									<Icon mr="2" as={BiArea}></Icon>
-									{property.dimensions}
-								</Text>
-								<Button
-									mt="5"
-									colorScheme="whatsapp"
-									onClick={() => showPropertyDetails(property.id)}
-								>
-									Show Property
-								</Button>
-							</AccordionPanel>
-						</AccordionItem>
-					))}
-				</Accordion>
-				<Heading mt="10" mb="5">
+								<AccordionPanel pb={4}>
+									<Text fontSize="lg" display="flex" alignItems="center">
+										<Icon mr="2" as={AiOutlineHome}></Icon>
+										{`${property.address}, ${property.zipCode}`}
+									</Text>
+									<Text fontSize="lg">
+										<Icon mr="2" as={BiArea}></Icon>
+										{property.dimensions}
+									</Text>
+									<Button
+										size="sm"
+										variant="outline"
+										mt="5"
+										colorScheme="purple"
+										onClick={() => showPropertyDetails(property.id)}
+									>
+										Show Property
+									</Button>
+								</AccordionPanel>
+							</AccordionItem>
+						))}
+					</Accordion> :
+					<Text fontSize="md">
+						No Properties available
+					</Text>}
+				<Heading size="lg" mt="10" mb="5">
 					Buy Requests:
 				</Heading>
-				<Accordion
-					allowToggle
-					defaultIndex={[0]}
-					onChange={onHandleAccordionChange}
-				>
-					{requests.map((req) => (
-						<AccordionItem>
-							<Text>
-								<AccordionButton>
-									<Box flex="1" textAlign="left">
-										<Heading size="lg">{req.orderId}</Heading>
+				{requests.length > 0 ?
+					<Accordion
+						allowToggle
+					>
+						{requests.map((req) => (
+							<AccordionItem>
+								<Text>
+									<AccordionButton>
+										<Box flex="1" textAlign="left">
+											<Heading size="md">{req.orderId}</Heading>
+										</Box>
+										<AccordionIcon />
+									</AccordionButton>
+								</Text>
+								<AccordionPanel pb={4}>
+									<Text fontSize="xl" display="flex" alignItems="center">
+										<Icon mr="2" as={AiOutlineHome}></Icon>
+										{mainAccount && getPropertyDetailsFromId(req.propertyId).name}
+									</Text>
+									<Text fontSize="xl">
+										<Icon mr="2" as={FaUserTie}></Icon>
+										{mainAccount && getDetailsFromAddress(req.buyerAddress).name}
+									</Text>
+									<Box width="100%" display="flex">
+										<Button
+											mt="5"
+											ml="2"
+											variant="outline"
+											colorScheme="green"
+											width="100%"
+											onClick={() => {
+												approveBuyRequest(req.orderId);
+											}}
+										>
+											Approve
+										</Button>
+										<Button
+											mt="5"
+											ml="2"
+											variant="outline"
+											colorScheme="red"
+											width="100%"
+											onClick={() => {
+												rejectBuyRequest(req.orderId);
+											}}
+										>
+											Reject
+										</Button>
 									</Box>
-									<AccordionIcon />
-								</AccordionButton>
-							</Text>
-							<AccordionPanel pb={4}>
-								<Text fontSize="xl" display="flex" alignItems="center">
-									<Icon mr="2" as={AiOutlineHome}></Icon>
-									{mainAccount && getPropertyDetailsFromId(req.propertyId).name}
-								</Text>
-								<Text fontSize="xl">
-									<Icon mr="2" as={FaUserTie}></Icon>
-									{mainAccount && getDetailsFromAddress(req.buyerAddress).name}
-								</Text>
-								<Button mt="5" colorScheme="whatsapp">
-									Approve
-								</Button>
-								<Button mt="5" ml="2" colorScheme="whatsapp">
-									Reject
-								</Button>
-							</AccordionPanel>
-						</AccordionItem>
-					))}
-				</Accordion>
+								</AccordionPanel>
+							</AccordionItem>
+						))}
+					</Accordion> :
+					<Text fontSize="md">
+						No Buy Requests available
+					</Text>}
 			</Box>
 			<Box width="70%" pl={2} pr={4}>
 				<CustomMap
@@ -257,6 +371,6 @@ export default function UserProfile() {
 					zoomLng={zoomCoord.lng}
 				/>
 			</Box>
-		</Flex>
+		</Flex >
 	);
 }
