@@ -21,6 +21,7 @@ import {
 } from '@chakra-ui/react';
 import { ExternalLinkIcon, AddIcon, RepeatClockIcon } from '@chakra-ui/icons';
 import { AiOutlineHome, AiOutlineUser, BiArea } from 'react-icons/all';
+import { v4 as uuid } from 'uuid';
 
 import { getProgram, getAccount, getPair } from '../utils/solana';
 import CustomMap from '../components/CustomMap';
@@ -106,6 +107,22 @@ export default function PropertyProfile() {
 		setMainAccount(account);
 	}
 
+	async function buyRequest() {
+		const program = await getProgram(wallet);
+		const pair = getPair();
+		await program.rpc.createbuyorder(
+			uuid(),
+			wallet.publicKey.toString(),
+			property.currentOwner,
+			id,
+			{
+				accounts: {
+					baseAccount: pair.publicKey,
+				},
+			}
+		);
+	}
+
 	return (
 		<Flex
 			style={{
@@ -161,6 +178,7 @@ export default function PropertyProfile() {
 							leftIcon={<AddIcon />}
 							colorScheme="purple"
 							variant="outline"
+							onClick={buyRequest}
 						>
 							Buy Request
 						</Button>
