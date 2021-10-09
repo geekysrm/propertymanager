@@ -53,6 +53,7 @@ export default function PropertyProfile() {
 					});
 
 					console.log('property: ', property);
+					console.log('account: ', account);
 
 					setProperty(property);
 					setMainAccount(account);
@@ -64,6 +65,7 @@ export default function PropertyProfile() {
 	}, []);
 
 	function getDetailsFromAddress(address) {
+		console.log(mainAccount);
 		return mainAccount.userList.find((user) => {
 			return user.address === address;
 		});
@@ -72,7 +74,9 @@ export default function PropertyProfile() {
 	function renderPastOwners() {
 		return property.pastOwnerList.map((owner) => {
 			return (
-				<ListItem key={owner}>{getDetailsFromAddress(owner).name}</ListItem>
+				<ListItem key={owner}>
+					{mainAccount && getDetailsFromAddress(owner).name}
+				</ListItem>
 			);
 		});
 	}
