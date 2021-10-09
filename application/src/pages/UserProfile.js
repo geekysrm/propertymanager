@@ -34,6 +34,7 @@ export default function UserProfile() {
 		lat: null,
 		lng: null,
 	});
+	const [requests, setRequests] = useState([]);
 
 	useEffect(() => {
 		(async () => {
@@ -74,6 +75,8 @@ export default function UserProfile() {
 					});
 
 					setProperties(properties);
+
+					setRequests(currAccount[0].buyOrders);
 				}
 			} else {
 				history.push('/connect');
@@ -181,6 +184,43 @@ export default function UserProfile() {
 									onClick={() => showPropertyDetails(property.id)}
 								>
 									Show Property
+								</Button>
+							</AccordionPanel>
+						</AccordionItem>
+					))}
+				</Accordion>
+				<Heading mt="10" mb="5">
+					Buy Requests:
+				</Heading>
+				<Accordion
+					allowToggle
+					defaultIndex={[0]}
+					onChange={onHandleAccordionChange}
+				>
+					{requests.map((req) => (
+						<AccordionItem>
+							<Text>
+								<AccordionButton>
+									<Box flex="1" textAlign="left">
+										<Heading size="lg">{req.orderId}</Heading>
+									</Box>
+									<AccordionIcon />
+								</AccordionButton>
+							</Text>
+							<AccordionPanel pb={4}>
+								<Text fontSize="xl" display="flex" alignItems="center">
+									<Icon mr="2" as={AiOutlineHome}></Icon>
+									{req.propertyId}
+								</Text>
+								<Text fontSize="xl">
+									<Icon mr="2" as={BiArea}></Icon>
+									{req.buyerAddress}
+								</Text>
+								<Button mt="5" colorScheme="whatsapp">
+									Approve
+								</Button>
+								<Button mt="5" ml="2" colorScheme="whatsapp">
+									Reject
 								</Button>
 							</AccordionPanel>
 						</AccordionItem>
