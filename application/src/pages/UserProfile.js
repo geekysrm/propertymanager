@@ -76,7 +76,13 @@ export default function UserProfile() {
 
 					setProperties(properties);
 
-					setRequests(currAccount[0].buyOrders);
+					const yourRequests = currAccount[0].buyOrders.map((order) => {
+						return account.buyOrderList.find((o) => {
+							return o.orderId === order;
+						});
+					});
+
+					setRequests(yourRequests);
 				}
 			} else {
 				history.push('/connect');
