@@ -304,6 +304,17 @@ export default function UserProfile() {
 					<Text fontSize="md">
 						No Properties available
 					</Text>}
+				<Box mt={6} width="100%">
+					<Button
+						as={Link}
+						to="/marketplace"
+						width="100%"
+						colorScheme="purple"
+						variant="outline"
+					>
+						Browse Other Properties
+					</Button>
+				</Box>
 				<Heading size="lg" mt="10" mb="5">
 					Buy Requests:
 				</Heading>
