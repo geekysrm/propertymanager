@@ -58,8 +58,6 @@ export default function UserProfile() {
 						(user) => user.address === address
 					);
 
-					console.log('currAccount', currAccount);
-
 					if (currAccount.length === 0) {
 						history.push('/');
 					}
@@ -108,8 +106,8 @@ export default function UserProfile() {
 		}
 	}
 
-	function onTransferProperty(propertyId) {
-		console.log(propertyId);
+	function showPropertyDetails(propertyId) {
+		history.push(`/property/${propertyId}`);
 	}
 
 	return (
@@ -180,9 +178,9 @@ export default function UserProfile() {
 								<Button
 									mt="5"
 									colorScheme="whatsapp"
-									onClick={() => onTransferProperty(property.id)}
+									onClick={() => showPropertyDetails(property.id)}
 								>
-									Transfer Property
+									Show Property
 								</Button>
 							</AccordionPanel>
 						</AccordionItem>
