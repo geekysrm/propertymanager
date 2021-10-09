@@ -13,29 +13,29 @@ import Navbar from './components/Navbar';
 import './App.css';
 
 const theme = extendTheme({
-  config: {
-    useSystemColorMode: true,
-    initialColorMode: 'dark',
-  },
+	config: {
+		initialColorMode: 'dark',
+		useSystemColorMode: false,
+	},
 });
 
 function App() {
-  return (
-    <ChakraProvider theme={theme}>
-      <Router>
-        <Navbar />
-        <Switch>
-          <Route exact path="/" component={Landing} />
-          <Route exact path="/connect" component={WalletConnect} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/user/:address" component={UserProfile} />
-          <Route exact path="/add/property" component={AddProperty} />
-          <Route exact path="/property/:id" component={PropertyProfile} />
-          <Route exact path="/marketplace" component={Marketplace} />
-        </Switch>
-      </Router>
-    </ChakraProvider>
-  );
+	return (
+		<ChakraProvider theme={theme}>
+			<Router>
+				<Navbar />
+				<Switch>
+					<Route exact path="/" component={Landing} />
+					<Route exact path="/connect" component={WalletConnect} />
+					<Route exact path="/register" component={Register} />
+					<Route exact path="/user/:address" component={UserProfile} />
+					<Route exact path="/add/property" component={AddProperty} />
+					<Route exact path="/property/:id" component={PropertyProfile} />
+					<Route exact path="/marketplace" component={Marketplace} />
+				</Switch>
+			</Router>
+		</ChakraProvider>
+	);
 }
 
 export default App;
