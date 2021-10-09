@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import Hero from '../components/Hero';
 import Features from '../components/Features';
+import Tech from "../components/Tech";
 import { getProvider, getProgram, getAccount } from '../utils/solana';
 
 export default function Landing() {
@@ -31,6 +32,7 @@ export default function Landing() {
 	return (
 		<div>
 			<Hero />
+			<Tech />
 			<Features />
 		</div>
 	);
