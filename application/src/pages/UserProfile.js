@@ -18,7 +18,7 @@ import {
 	Icon,
 } from '@chakra-ui/react';
 import { PhoneIcon, EmailIcon, AddIcon } from '@chakra-ui/icons';
-import { AiOutlineHome, BiArea } from 'react-icons/all';
+import { AiOutlineHome, BiArea, FaUserTie } from 'react-icons/all';
 
 import { getProgram, getAccount, getPair } from '../utils/solana';
 import CustomMap from '../components/CustomMap';
@@ -35,6 +35,7 @@ export default function UserProfile() {
 		lng: null,
 	});
 	const [requests, setRequests] = useState([]);
+	const [mainAccount, setMainAccount] = useState(null);
 
 	useEffect(() => {
 		(async () => {
@@ -83,6 +84,8 @@ export default function UserProfile() {
 					});
 
 					setRequests(yourRequests);
+
+					setMainAccount(account);
 				}
 			} else {
 				history.push('/connect');
@@ -117,6 +120,20 @@ export default function UserProfile() {
 
 	function showPropertyDetails(propertyId) {
 		history.push(`/property/${propertyId}`);
+	}
+
+	function getDetailsFromAddress(address) {
+		console.log(mainAccount);
+		return mainAccount.userList.find((user) => {
+			return user.address === address;
+		});
+	}
+
+	function getPropertyDetailsFromId(id) {
+		console.log(mainAccount);
+		return mainAccount.propertyList.find((property) => {
+			return property.id === id;
+		});
 	}
 
 	return (
@@ -216,11 +233,11 @@ export default function UserProfile() {
 							<AccordionPanel pb={4}>
 								<Text fontSize="xl" display="flex" alignItems="center">
 									<Icon mr="2" as={AiOutlineHome}></Icon>
-									{req.propertyId}
+									{mainAccount && getPropertyDetailsFromId(req.propertyId).name}
 								</Text>
 								<Text fontSize="xl">
-									<Icon mr="2" as={BiArea}></Icon>
-									{req.buyerAddress}
+									<Icon mr="2" as={FaUserTie}></Icon>
+									{mainAccount && getDetailsFromAddress(req.buyerAddress).name}
 								</Text>
 								<Button mt="5" colorScheme="whatsapp">
 									Approve
