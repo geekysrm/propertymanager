@@ -51,8 +51,7 @@ export default function Features() {
   };
   return (
     <Flex
-      //   bg={useColorModeValue('#F9FAFB', 'gray.600')}
-      p={20}
+      py={10}
       w="auto"
       justifyContent="center"
       alignItems="center"
@@ -60,14 +59,6 @@ export default function Features() {
       <Box py={12} bg={useColorModeValue('white', 'gray.800')} rounded="xl">
         <Box maxW="7xl" mx="auto" px={{ base: 4, lg: 8 }}>
           <Box textAlign={{ lg: 'center' }}>
-            <chakra.h2
-              color={useColorModeValue('brand.600')}
-              fontWeight="semibold"
-              textTransform="uppercase"
-              letterSpacing="wide"
-            >
-              Transactions
-            </chakra.h2>
             <chakra.p
               mt={2}
               fontSize={{ base: '3xl', sm: '4xl' }}
@@ -76,7 +67,7 @@ export default function Features() {
               letterSpacing="tight"
               color={useColorModeValue('gray.900')}
             >
-              A better way to send money
+              A safe &amp; secure way to store property records
             </chakra.p>
             <chakra.p
               mt={4}

@@ -9,7 +9,14 @@ export default function Tech() {
             alignItems="center"
             flexDirection="column"
         >
-            <Heading size="lg" mb={5} >Tech Used</Heading>
+            <Heading
+                fontWeight="extrabold"
+                letterSpacing="tight"
+                size="lg"
+                mb={5}
+            >
+                Tech Used
+            </Heading>
             <Flex
                 justifyContent="center"
                 alignItems="center"

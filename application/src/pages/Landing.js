@@ -5,6 +5,8 @@ import { useHistory } from 'react-router-dom';
 import Hero from '../components/Hero';
 import Features from '../components/Features';
 import Tech from "../components/Tech";
+import Problems from '../components/Problems';
+import Footer from '../components/Footer';
 import { getProvider, getProgram, getAccount } from '../utils/solana';
 
 export default function Landing() {
@@ -33,7 +35,9 @@ export default function Landing() {
 		<div>
 			<Hero />
 			<Tech />
+			<Problems />
 			<Features />
+			<Footer />
 		</div>
 	);
 }
