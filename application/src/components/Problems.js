@@ -7,6 +7,9 @@ import {
     Icon,
     Stack,
 } from '@chakra-ui/react';
+import { BiError, RiFileDamageLine } from 'react-icons/all';
+import { SearchIcon } from '@chakra-ui/icons'
+
 
 export default function Problems() {
     const Feature = props => {
@@ -22,15 +25,7 @@ export default function Problems() {
                         bg={useColorModeValue('brand.500')}
                         color="white"
                     >
-                        <Icon
-                            boxSize={6}
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            aria-hidden="true"
-                        >
-                            {props.icon}
-                        </Icon>
+                        {props.icon}
                     </Flex>
                 </Flex>
                 <Box ml={4}>
@@ -67,17 +62,7 @@ export default function Problems() {
                             letterSpacing="tight"
                             color={useColorModeValue('gray.900')}
                         >
-                            A safe &amp; secure way to store property records
-                        </chakra.p>
-                        <chakra.p
-                            mt={4}
-                            maxW="2xl"
-                            fontSize="xl"
-                            mx={{ lg: 'auto' }}
-                            color={useColorModeValue('gray.500', 'gray.400')}
-                        >
-                            Lorem ipsum dolor sit amet consect adipisicing elit. Possimus
-                            magnam voluptatum cupiditate veritatis in accusamus quisquam.
+                            Challenges in current property management system
                         </chakra.p>
                     </Box>
 
@@ -90,67 +75,56 @@ export default function Problems() {
                             gridRowGap={{ md: 10 }}
                         >
                             <Feature
-                                title="Competitive exchange rates"
+                                title="Forgery"
                                 icon={
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                                    />
+                                    <Icon
+                                        boxSize={6}
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"
+                                        />
+                                    </Icon>
+
                                 }
                             >
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                Maiores impedit perferendis suscipit eaque, iste dolor
-                                cupiditate blanditiis ratione.
+                                The paper document used in property registration might be counterfeited,
+                                posing a serious danger to the proprietor.
+                                The property owner is at risk of losing his or her property.
                             </Feature>
 
                             <Feature
-                                title=" No hidden fees"
+                                title="Human error"
                                 icon={
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"
-                                    />
+                                    <Icon w={6} h={6} as={BiError}></Icon>
                                 }
                             >
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                Maiores impedit perferendis suscipit eaque, iste dolor
-                                cupiditate blanditiis ratione.
+                                During the property registration procedure, there is a lot of human involvement. Eventually, this results in a huge number of human errors.
                             </Feature>
 
                             <Feature
-                                title="Transfers are instant"
+                                title="Wear and tear of documents"
                                 icon={
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M13 10V3L4 14h7v7l9-11h-7z"
-                                    />
+                                    <Icon w={6} h={6} as={RiFileDamageLine}></Icon>
                                 }
                             >
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                Maiores impedit perferendis suscipit eaque, iste dolor
-                                cupiditate blanditiis ratione.
+                                Printed property papers, as we all know, do not endure more than a decade if not properly kept.
+                                Most traditional papers are unrecognisable as a result of this wear and tear.
                             </Feature>
 
                             <Feature
-                                title="Mobile notifications"
+                                title="Traceability"
                                 icon={
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
-                                    />
+                                    <SearchIcon w={5} h={5}></SearchIcon>
                                 }
                             >
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                Maiores impedit perferendis suscipit eaque, iste dolor
-                                cupiditate blanditiis ratione.
+                                In certain nations, you can only find out who the current owner is by looking at paper records. It prevents us from discovering who else owned the property previously.
                             </Feature>
                         </Stack>
                     </Box>
