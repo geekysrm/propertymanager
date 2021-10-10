@@ -15,7 +15,7 @@ import {
 import { useHistory } from 'react-router-dom';
 import { useWallet } from '@solana/wallet-adapter-react';
 
-import { getProvider, getProgram, getAccount, getPair } from '../utils/solana';
+import { getProgram, getPair } from '../utils/solana';
 
 export default function Component() {
   const [name, setName] = useState('');

@@ -15,10 +15,9 @@ import {
 } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
 import { useWallet } from '@solana/wallet-adapter-react';
+import { v4 as uuidv4 } from 'uuid';
 
-import { v4 as uuidv4 } from "uuid";
-
-import { getProvider, getProgram, getAccount, getPair } from '../utils/solana';
+import { getProgram, getPair } from '../utils/solana';
 
 export default function AddPropertyForm() {
   const [propertyName, setPropertyName] = useState('');
@@ -38,7 +37,8 @@ export default function AddPropertyForm() {
     const walletAddress = wallet.publicKey.toString();
     const program = await getProgram(wallet);
     const pair = getPair();
-    const dimensions = `${propertyDimensions1}X${propertyDimensions2}`.toString();
+    const dimensions =
+      `${propertyDimensions1}X${propertyDimensions2}`.toString();
 
     await program.rpc.addproperty(
       uuidv4(),

@@ -1,15 +1,9 @@
 import React from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
-import { Button } from '@chakra-ui/react';
+import { Button, Flex, Box, Alert, Link, AlertIcon } from '@chakra-ui/react';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 import { useHistory } from 'react-router-dom';
-import {
-  Flex, Box, Heading, Text, Alert, Link,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-} from "@chakra-ui/react"
 require('@solana/wallet-adapter-react-ui/styles.css');
 
 export default function WallectConnect() {
@@ -27,8 +21,17 @@ export default function WallectConnect() {
         <Box>
           <Alert status="info">
             <AlertIcon />
-            Please make sure that you wallet is connected to Solana Devnet and has some
-            <Link isExternal ml={1} color="purple.300" href="https://solfaucet.com/">balance</Link>.
+            Please make sure that you wallet is connected to Solana Devnet and
+            has some
+            <Link
+              isExternal
+              ml={1}
+              color="purple.300"
+              href="https://solfaucet.com/"
+            >
+              balance
+            </Link>
+            .
           </Alert>
         </Box>
       </Flex>
