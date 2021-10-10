@@ -27,7 +27,7 @@ const Hero = () => {
 					color={useColorModeValue('white', 'gray.100')}
 					mb={6}
 				>
-					<chakra.span display="block">Ready to dive in?</chakra.span>
+					<chakra.span display="block">Getting scammed while buying properties ?</chakra.span>
 					<chakra.span
 						display="block"
 						color={useColorModeValue('white', 'gray.500')}
@@ -35,15 +35,6 @@ const Hero = () => {
 						Start by connecting your Solana wallet
 					</chakra.span>
 				</chakra.h2>
-				<chakra.p
-					mb={6}
-					fontSize={{ base: 'lg', md: 'xl' }}
-					color={useColorModeValue('gray.100', 'gray.300')}
-				>
-					Hellonext is a feature voting software where you can allow your users
-					to vote on features, publish roadmap, and complete your customer
-					feedback loop.
-				</chakra.p>
 				<Stack
 					direction={{ base: 'column', sm: 'row' }}
 					mb={{ base: 4, md: 8 }}
