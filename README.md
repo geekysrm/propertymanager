@@ -22,7 +22,7 @@ It stores all the property records along with it's ownership & other details on 
  - Run `solana address -k target/deploy/propertymanager-keypair.json` and the update the address you get in response in `Anchor.toml` & `lib.rs`
  - Run `anchor deploy`
  - cd into `/application/scripts` and then run `node init.js`
- - cd into `/application`  and then run "npm start"
+ - cd into `/application`  and then run `npm start`
  - Now access the Dapp on http://localhost:3000/
  - Use the Dapp on solana devnet similarly as mentioned above.
 
