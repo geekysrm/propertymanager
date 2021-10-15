@@ -1,5 +1,12 @@
 import React from 'react';
-import { chakra, Box, useColorModeValue, Stack, Flex } from '@chakra-ui/react';
+import {
+  chakra,
+  Box,
+  useColorModeValue,
+  Stack,
+  Flex,
+  Image,
+} from '@chakra-ui/react';
 import YouTube from 'react-youtube';
 import { NavLink as Link } from 'react-router-dom';
 
@@ -67,14 +74,22 @@ const Hero = () => {
           </Box>
         </Stack>
       </Flex>
-      <Flex
+      {/* <Flex
         justifyContent="center"
         w={{ base: 'full', md: 10 / 12 }}
         mx="auto"
         textAlign="center"
       >
         <YouTube videoId="e386hO_GEeI" loading="lazy" />
-      </Flex>
+      </Flex> */}
+      <Box border="1px" borderColor="gray.500" p={2} borderRadius={5}>
+        <Image
+          src="/images/feature2.jpeg"
+          alt="feature1"
+          height="100%"
+          objectFit="contain"
+        />
+      </Box>
     </Flex>
   );
 };
