@@ -30,7 +30,7 @@ const Navbar = () => {
       alignItems="center"
       as="a"
       aria-label="Vote for us"
-      href={''}
+      href="https://link.soumya.dev/solana-vote"
       target="_blank"
       bg="gray.50"
       borderWidth="1px"
@@ -108,7 +108,7 @@ const Navbar = () => {
                 display={{ base: 'flex', md: 'none' }}
                 as="a"
                 aria-label="Vote for us"
-                href={''}
+                href="https://link.soumya.dev/solana-vote"
                 target="_blank"
               >
                 <Icon as={FaHeart} w="4" h="4" color="red.500" mr="2" />
