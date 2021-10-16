@@ -1,12 +1,20 @@
 {
-  "redirects": [
+  "rewrites": [
     {
       "source": "/bee.js",
       "destination": "https://cdn.splitbee.io/sb.js"
     },
     {
+      "source": "/bee.js/",
+      "destination": "https://cdn.splitbee.io/sb.js/"
+    },
+    {
       "source": "/_hive/:path*",
       "destination": "https://hive.splitbee.io/:path*"
+    },
+    {
+      "source": "/_hive/:path*/",
+      "destination": "https://hive.splitbee.io/:path*/"
     }
   ]
 }
